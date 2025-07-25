@@ -169,8 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (deckCode) {
     loadDeckList();
     renderDeckList();
-    renderDeckListPeripherals();
   }
+
+  renderDeckListPeripherals();
 });
 
 // DONE
