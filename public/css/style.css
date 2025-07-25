@@ -1,0 +1,317 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90vw;
+    height: 98vh;
+    overflow-y: hidden;
+}
+
+/* Upper panels */
+#deck-filter-panel {
+    width: 78vw;
+    height: 8vw;
+    min-width: 10vw;
+    min-height: 8vw;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 1vw;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#deck-panel {
+    width: 10vw;
+    height: 8vw;
+    min-width: 10vw;
+    min-height: 8vw;
+    border: 1px solid black;
+    box-sizing: border-box;
+    /* padding: 1vw; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0.3vw;
+    font-size: 1.1vw;
+}
+
+#card-list-panel .card {
+  user-select: none;
+}
+
+/* Lower panels */
+#card-list-panel {
+    width: 78vw;
+    height: 40vw;
+    min-width: 10vw;
+    min-height: 10vw;
+    overflow-y: auto;
+    max-height: 40vw;
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    padding: 2.75vw;
+    gap: 20px;
+    row-gap: 60px;
+}
+
+#deck-list-and-code-panel {
+    width: 10vw;
+    height: 40vw;
+    min-width: 10vw;
+    min-height: 10vw;
+    max-height: 40vw;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+#deck-list-panel {
+    width: 10vw;
+    height: 35.5vw;
+    min-width: 10vw;
+    min-height: 8vw;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+#deck-code-panel {
+    width: 9.9vw;
+    height: 4.5vw;
+    min-width: 9.9vw;
+    min-height: 4.5vw;
+    border-top: 1px solid #000;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    align-content: flex-start;
+    padding-top: 2.5%;
+}
+
+.copy-code-btn, .enter-code-btn {
+  flex: 0 1 auto;
+  max-width: 49%;
+  height: auto;
+}
+
+.download-deck-btn {
+    flex: 0 1 auto;
+    max-width: 55%;
+    height: auto;
+}
+
+.card {
+    width: 215px;
+    height: 301px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#card-info {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  width: max-content !important;
+  max-width: 36vw !important;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  user-select: none;
+  gap: 1rem;
+}
+
+.popUpCard {
+  flex-shrink: 0;
+  width: 18vw;
+  height: 25.2vw;
+  border-radius: 10px;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+}
+
+.popUpCard img {
+  width: 100%;
+  height: 100%;
+  max-width: 18vw;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+.popUpDetails {
+  flex-grow: 1;
+  user-select: none;
+  overflow-wrap: break-word;
+}
+
+.decklistCard {
+  width: 8.9vw;
+  height: 22px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background-size: 140%;
+  background-position: 15% 2.4%;
+  background-repeat: no-repeat;
+}
+
+
+/* .decklistCard {
+    width: 8.9vw;
+    height: 22px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+} */
+
+/* .decklistCard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 20% 1.4%;
+} */
+
+#cardCount {
+    width: 1vw;
+    height: 1vw;
+    border-radius: 5%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    box-sizing: border-box;
+    border: 2px solid black;
+    background-color: transparent;
+    padding-top: 1%;
+    margin-top: 1%;
+}
+
+#card-input {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 235px;
+}
+
+@keyframes flash {
+  0% { background-color: rgb(0, 123, 255); }
+  100% { background-color: transparent; }
+}
+
+.flash {
+  animation: flash 0.5s ease;
+}
+
+#deckCode::placeholder {
+  text-align: center;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card.flashCard::before {
+  animation: flashCard 0.5s ease;
+  z-index: 2;
+}
+
+/* @keyframes flashCard {
+  0% { background-color: rgba(255, 255, 255, 0.6); }
+  100% { background-color: transparent; }
+} */
+
+@keyframes flashCard {
+  0% { background-color: rgba(255, 255, 255, 0.6); }
+  100% { background-color: rgba(255, 255, 255, 0); }
+}
+
+.card.disabled {
+  opacity: 0.4;
+  filter: grayscale(80%);
+  user-select: none;
+}
+
+
+.decklistCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0); /* Start transparent */
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decklistCard.flashCard::before {
+  animation: flashCard 0.5s ease;
+  z-index: 2;
+}
+
+/* @keyframes flashCard {
+  0% { background-color: rgba(255, 255, 255, 0.6); }
+  100% { background-color: transparent; }
+} */
+
+
+/* #cards-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+    background: none;
+    max-width: 300px;
+}
+
+#cards-checklist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.cards-checklist-item {
+    flex: 1 1 auto;
+    margin: 5px;
+    font-size: smaller;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.card-warning-icon {
+    color: red;
+    margin-left: -2px;
+} */
