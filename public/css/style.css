@@ -9,40 +9,39 @@ body {
 #content {
     display: flex;
     flex-wrap: wrap;
-    width: 90vw;
-    height: 98vh;
+    width: 1728px; /* 90vw on w : 19.2 per vw*/
+    height: 925px; /* 98vw on h : 9.47 per vh*/
     overflow-y: hidden;
 }
 
 /* Upper panels */
 #deck-filter-panel {
-    width: 78vw;
-    height: 8vw;
-    min-width: 10vw;
-    min-height: 8vw;
+    width: 1497.6px;
+    height: 153.6px;
+    min-width: 192px;
+    min-height: 153.6px;
     border: 1px solid black;
     box-sizing: border-box;
-    padding: 1vw;
+    padding: 19.2px;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
 #deck-panel {
-    width: 10vw;
-    height: 8vw;
-    min-width: 10vw;
-    min-height: 8vw;
+    width: 192px;
+    height: 153.6px;
+    min-width: 192px;
+    min-height: 153.6px;
     border: 1px solid black;
     box-sizing: border-box;
-    /* padding: 1vw; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 0.3vw;
-    font-size: 1.1vw;
+    gap: 5.76px;
+    font-size: 21.12px;
 }
 
 #card-list-panel .card {
@@ -51,36 +50,36 @@ body {
 
 /* Lower panels */
 #card-list-panel {
-    width: 78vw;
-    height: 40vw;
-    min-width: 10vw;
-    min-height: 10vw;
+    width: 1497.6px;
+    height: 768px;
+    min-width: 192px;
+    min-height: 192px;
     overflow-y: auto;
-    max-height: 40vw;
+    max-height: 768px;
     border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    padding: 2.75vw;
-    gap: 20px;
+    padding: 52.8px;
+    gap: 17px;
     row-gap: 60px;
 }
 
 #deck-list-and-code-panel {
-    width: 10vw;
-    height: 40vw;
-    min-width: 10vw;
-    min-height: 10vw;
-    max-height: 40vw;
+    width: 192px;
+    height: 768px;
+    min-width: 192px;
+    min-height: 192px;
+    max-height: 768px;
     border: 1px solid black;
     box-sizing: border-box;
 }
 
 #deck-list-panel {
-    width: 10vw;
-    height: 35.5vw;
-    min-width: 10vw;
-    min-height: 8vw;
+    width: 192px;
+    height: 681.6px;
+    min-width: 192px;
+    min-height: 153.6px;
     box-sizing: border-box;
     overflow-y: auto;
     display: flex;
@@ -89,10 +88,10 @@ body {
 }
 
 #deck-code-panel {
-    width: 9.9vw;
-    height: 4.5vw;
-    min-width: 9.9vw;
-    min-height: 4.5vw;
+    width: 190.08px;
+    height: 86.4px;
+    min-width: 190.08px;
+    min-height: 86.4px;
     border-top: 1px solid #000;
     box-sizing: border-box;
     display: flex;
@@ -112,7 +111,7 @@ body {
 
 .download-deck-btn {
     flex: 0 1 auto;
-    max-width: 55%;
+    max-width: 110px;
     height: auto;
 }
 
@@ -136,7 +135,7 @@ body {
   flex-wrap: nowrap !important;
   align-items: flex-start !important;
   width: max-content !important;
-  max-width: 36vw !important;
+  max-width: 691.2px !important;
   background: #fff;
   border: 1px solid #ccc;
   padding: 8px;
@@ -147,12 +146,14 @@ body {
   pointer-events: none;
   user-select: none;
   gap: 1rem;
+  top: 19.2px;
+  left: 19.2px;
 }
 
 .popUpCard {
   flex-shrink: 0;
-  width: 18vw;
-  height: 25.2vw;
+  width: 345.6px;
+  height: 483.84 px;
   border-radius: 10px;
   overflow: hidden;
   user-select: none;
@@ -163,7 +164,7 @@ body {
 .popUpCard img {
   width: 100%;
   height: 100%;
-  max-width: 18vw;
+  max-width: 345.6px;
   object-fit: cover;
   user-select: none;
   pointer-events: none;
@@ -176,7 +177,7 @@ body {
 }
 
 .decklistCard {
-  width: 8.9vw;
+  width: 170.88px;
   height: 22px;
   border-radius: 10px;
   position: relative;
@@ -188,7 +189,7 @@ body {
 
 
 /* .decklistCard {
-    width: 8.9vw;
+    width: 170.88px;
     height: 22px;
     border-radius: 10px;
     position: relative;
@@ -203,8 +204,8 @@ body {
 } */
 
 #cardCount {
-    width: 1vw;
-    height: 1vw;
+    width: 19.2px;
+    height: 19.2px;
     border-radius: 5%;
     justify-content: center;
     align-items: center;
