@@ -263,8 +263,7 @@ function setDeckListCardsClickable() {
       removeCard(id);
     });
 
-    div.addEventListener("contextmenu", (e) => {
-      e.preventDefault();
+    div.addEventListener("mouseenter", (e) => {
       const infoBox = document.getElementById("card-info");
 
       const container = e.target.closest(".decklistCard");
@@ -317,9 +316,15 @@ document.getElementById("card-list-panel").addEventListener("scroll", () => {
   infoBox.style.display = "none";
 });
 
-// document.getElementById("card-list-panel").addEventListener("scroll", () => {
-//   document.getElementById("card-info").style.display = "none";
-// });
+document
+  .getElementById("deck-list-panel")
+  .addEventListener("mouseleave", () => {
+    const infoBox = document.getElementById("card-info");
+    infoBox.style.left = `1vw`;
+    infoBox.style.top = `1vw`;
+    infoBox.innerHTML = "";
+    infoBox.style.display = "none";
+  });
 
 // DONE
 function setCardListCardsClickable() {
