@@ -44,8 +44,10 @@ function addCard(id, maxCount) {
   renderDeckListPeripherals();
   // filterCardListCards();
 
-  const deckList = document.getElementById("deck-list-panel");
-  deckList.scrollTop = deckList.scrollHeight;
+  const target = document.querySelector(`.decklistCard[data-id="${id}"]`);
+  if (target) {
+    target.scrollIntoView({ behavior: "auto", block: "nearest" });
+  }
 
   flashCardAnimation(`[data-id="${String(id)}"]`);
   flashCardAnimation(`.decklistCard[data-id="${id}"]`);
@@ -69,6 +71,11 @@ function removeCard(id, maxCount) {
 
   renderDeckList();
   renderDeckListPeripherals();
+
+  const target = document.querySelector(`[data-id="${String(id)}"]`);
+  if (target) {
+    target.scrollIntoView({ behavior: "auto", block: "nearest" });
+  }
 
   flashCardAnimation(`[data-id="${String(id)}"]`);
   flashCardAnimation(`.decklistCard[data-id="${id}"]`);
