@@ -243,8 +243,6 @@ function setDeckListCardsDraggable() {
   cardList.addEventListener("drop", (e) => {
     e.preventDefault();
 
-    console.log("DROPPED");
-
     const id = e.dataTransfer.getData("id");
     removeCard(id, true);
   });
@@ -377,22 +375,41 @@ function setCardListCardsClickable() {
 
 // DONE
 function filterCardListCards() {
-  console.log("filterCardListCards");
   const filterInput = document.getElementById("filter-input");
+  const terms = filterInput.value
+    .toLowerCase()
+    .split(",")
+    .map((term) => term.trim())
+    .filter((term) => term !== "");
+
+  const includes = terms.filter((t) => !t.startsWith("-"));
+  const excludes = terms
+    .filter((t) => t.startsWith("-"))
+    .map((t) => t.slice(1));
+
   const filteredCards = cards.filter((card) => {
-    const filterValue = filterInput.value.toLowerCase();
-    if (filterValue === "") return true;
-    return (
-      card.name.toString().toLowerCase().includes(filterValue) ||
-      card.cost.toString().toLowerCase().includes(filterValue) ||
-      card.text.toString().toLowerCase().includes(filterValue) ||
-      card.identity.toString().toLowerCase().includes(filterValue) ||
-      card.type.toString().toLowerCase().includes(filterValue) ||
-      card.stats.toString().toLowerCase().includes(filterValue) ||
-      card.rarity.toString().toLowerCase().includes(filterValue) ||
-      card.cmc.toString().toLowerCase().includes(filterValue) ||
-      card.metadata.toString().toLowerCase().includes(filterValue)
-    );
+    const text = [
+      card.name,
+      card.cost,
+      card.text,
+      card.identity,
+      card.type,
+      card.stats,
+      card.rarity,
+      card.cmc,
+      card.metadata,
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    // must match at least one include (if any exist)
+    const includeMatch =
+      includes.length === 0 || includes.some((term) => text.includes(term));
+
+    // must NOT match any exclude
+    const excludeMatch = excludes.some((term) => text.includes(term));
+
+    return includeMatch && !excludeMatch;
   });
 
   renderCardList(filteredCards);
