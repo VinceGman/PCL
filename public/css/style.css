@@ -10,7 +10,11 @@ body {
     display: flex;
     flex-wrap: wrap;
     width: 1728px; /* 90vw on w : 19.2 per vw*/
+    max-width: 1728px;
+    min-width: 1728px;
     height: 925px; /* 98vw on h : 9.47 per vh*/
+    max-height: 925px;
+    min-height: 925px;
     overflow-y: hidden;
 }
 
@@ -61,8 +65,9 @@ body {
     flex-wrap: wrap;
     box-sizing: border-box;
     padding: 52.8px;
-    gap: 17px;
+    gap: 20px;
     row-gap: 60px;
+    scrollbar-width: none;
 }
 
 #deck-list-and-code-panel {
@@ -85,6 +90,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    scrollbar-width: none;
 }
 
 #deck-code-panel {
@@ -103,16 +109,10 @@ body {
     padding-top: 2.5%;
 }
 
-.copy-code-btn, .enter-code-btn {
+.copy-code-btn, .enter-code-btn, .delete-deck-btn, .download-deck-btn {
   flex: 0 1 auto;
   max-width: 49%;
   height: auto;
-}
-
-.download-deck-btn {
-    flex: 0 1 auto;
-    max-width: 110px;
-    height: auto;
 }
 
 .card {

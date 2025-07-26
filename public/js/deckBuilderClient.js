@@ -8,19 +8,27 @@ let totalDeck = 0;
 console.log(cards);
 
 // DONE
-function addCard(id) {
+function addCard(id, maxCount) {
+  const deckCard = deck.find((c) => c.id == id);
   const card = cards.find((c) => c.id == id);
   if (!card) return;
-  if (totalCards >= 69) return;
 
-  const deckCard = deck.find((c) => c.id == id);
+  let countToAdd = 1;
+
+  if (deckCard) {
+    if (deckCard.deckCopies >= deckCard.copies) return;
+    countToAdd = maxCount ? deckCard.copies - deckCard.deckCopies : 1;
+  } else if (maxCount) {
+    countToAdd = card.copies;
+  }
+
+  countToAdd = Math.min(69 - totalCards, countToAdd);
+  if (countToAdd <= 0) return;
 
   if (!deckCard) {
-    deck.push({ ...card, deckCopies: 1 });
-  } else if (deckCard.deckCopies < deckCard.copies) {
-    deckCard.deckCopies += 1;
+    deck.push({ ...card, deckCopies: countToAdd });
   } else {
-    return;
+    deckCard.deckCopies += countToAdd;
   }
 
   deck.sort((a, b) => {
@@ -35,16 +43,22 @@ function addCard(id) {
   renderDeckList();
   renderDeckListPeripherals();
   // filterCardListCards();
+
+  const deckList = document.getElementById("deck-list-panel");
+  deckList.scrollTop = deckList.scrollHeight;
+
+  flashCardAnimation(`[data-id="${String(id)}"]`);
+  flashCardAnimation(`.decklistCard[data-id="${id}"]`);
 }
 
 // DONE
-function removeCard(id) {
+function removeCard(id, maxCount) {
   const index = deck.findIndex((card) => card.id == id);
   if (index == -1) return;
   const card = deck.find((card) => card.id == id);
   if (!card) return;
 
-  if (card.deckCopies <= 1) {
+  if (card.deckCopies <= 1 || maxCount) {
     deck.splice(index, 1);
   } else {
     card.deckCopies -= 1;
@@ -94,6 +108,19 @@ document.querySelector(".filter-btn").addEventListener("click", (e) => {
   }, 0);
 });
 
+document.querySelector(".delete-deck-btn").addEventListener("click", () => {
+  deck.length = 0;
+  updateCardCounts();
+
+  const deckCode = document.getElementById("deckCode");
+  deckCode.value = "";
+
+  filterCardListCards();
+
+  renderDeckList();
+  renderDeckPanel();
+});
+
 // DONE
 document.querySelector(".download-deck-btn").addEventListener("click", (e) => {
   e.preventDefault();
@@ -129,13 +156,14 @@ function renderDeckList() {
   deckList.innerHTML = deck
     .map(
       (card) => `
-    <div class="decklistCard" data-id="${card.id}" style="background-image: url('${card.image}');"></div>
+    <div class="decklistCard" draggable="true" data-id="${card.id}" style="background-image: url('${card.image}');"></div>
     <div id="cardCount">${card.deckCopies}</div>
     `
     )
     .join("");
 
   setDeckListCardsClickable();
+  setDeckListCardsDraggable();
 }
 
 // // DONE
@@ -190,9 +218,28 @@ function setCardListCardsDraggable() {
     e.preventDefault();
 
     const id = e.dataTransfer.getData("id");
-    addCard(id);
+    addCard(id, true);
+  });
+}
 
-    flashCardAnimation(`[data-id="${String(id)}"]`);
+function setDeckListCardsDraggable() {
+  document.addEventListener("dragstart", (e) => {
+    const card = e.target.closest(".decklistCard");
+    if (card) {
+      e.dataTransfer.setData("id", card.dataset.id);
+    }
+  });
+
+  const cardList = document.getElementById("card-list-panel");
+  cardList.addEventListener("dragover", (e) => e.preventDefault());
+
+  cardList.addEventListener("drop", (e) => {
+    e.preventDefault();
+
+    console.log("DROPPED");
+
+    const id = e.dataTransfer.getData("id");
+    removeCard(id, true);
   });
 }
 
@@ -279,10 +326,6 @@ function setCardListCardsClickable() {
 
       const infoBox = document.getElementById("card-info");
       if (infoBox.style.display == "block") return;
-
-      container.classList.remove("flashCard");
-      void container.offsetWidth;
-      container.classList.add("flashCard");
 
       const id = container.dataset.id;
       addCard(id);
