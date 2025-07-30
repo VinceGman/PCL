@@ -1,4 +1,6 @@
 const csv = require("../libraries/csv");
+const fs = require("fs");
+const path = require("path");
 
 class CardModel {
   constructor() {
@@ -9,7 +11,9 @@ class CardModel {
   // Interacts with Firestore database to get cards
   async getCards() {
     const cards = (await csv.getCSVCards())
-      .filter((card) => card.eligible == "TRUE")
+      .filter((card) =>
+        fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.webp`))
+      )
       .map((card) => ({
         ...card,
         id: +card.id,
