@@ -4,6 +4,7 @@ let totalCards = 0;
 let totalRunes = 0;
 let totalTokens = 0;
 let totalDeck = 0;
+let totalSideboard = 0;
 
 console.log(cards);
 
@@ -387,10 +388,15 @@ function filterCardListCards() {
     .map((term) => term.trim())
     .filter((term) => term !== "");
 
-  const includes = terms.filter((t) => !t.startsWith("-"));
+  const musts = terms.filter((t) => t.startsWith("+")).map((t) => t.slice(1));
+
   const excludes = terms
     .filter((t) => t.startsWith("-"))
     .map((t) => t.slice(1));
+
+  const includes = terms.filter(
+    (t) => !t.startsWith("+") && !t.startsWith("-")
+  );
 
   const filteredCards = cards.filter((card) => {
     const text = [
@@ -407,14 +413,19 @@ function filterCardListCards() {
       .join(" ")
       .toLowerCase();
 
-    // must match at least one include (if any exist)
-    const includeMatch =
-      includes.length === 0 || includes.some((term) => text.includes(term));
+    if (musts.length && !musts.every((term) => text.includes(term))) {
+      return false;
+    }
 
-    // must NOT match any exclude
-    const excludeMatch = excludes.some((term) => text.includes(term));
+    if (excludes.some((term) => text.includes(term))) {
+      return false;
+    }
 
-    return includeMatch && !excludeMatch;
+    if (includes.length && !includes.some((term) => text.includes(term))) {
+      return false;
+    }
+
+    return true;
   });
 
   renderCardList(filteredCards);
@@ -506,6 +517,14 @@ function renderDeckPanel() {
   const totalDeckText = document.getElementById("totalDeck");
   totalDeckText.innerHTML = `Deck: ${totalDeck}/60`;
 
+  const totalSideboardText = document.getElementById("totalSideboard");
+  if (totalSideboard > 0) {
+    totalSideboardText.innerHTML = `Sideboard: ${totalSideboard}`;
+  } else {
+    totalSideboardText.innerHTML = ``;
+  }
+  totalDeckText.innerHTML = `Deck: ${totalDeck}/60`;
+
   const totalRunesText = document.getElementById("totalRunes");
   if (totalRunes > 0) {
     totalRunesText.innerHTML = `Runes: ${totalRunes}`;
@@ -533,6 +552,9 @@ function updateCardCounts() {
     .reduce((sum, card) => sum + card.deckCopies, 0);
 
   totalDeck = totalCards - totalRunes - totalTokens;
+
+  totalSideboard = Math.max(0, totalDeck - 60);
+  totalDeck -= totalSideboard;
 }
 
 function updateSelection(id) {
