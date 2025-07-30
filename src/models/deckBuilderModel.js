@@ -15,7 +15,7 @@ class CardModel {
         id: +card.id,
         cmc: +card.cmc,
         copies: +card.copies,
-        image: `https://raw.githubusercontent.com/VinceGman/PCL/refs/heads/main/Cards/${card.image_reference}.webp`,
+        image: `https://raw.githubusercontent.com/VinceGman/PCL/refs/heads/main/Cards/${card.id}.webp`,
       }))
       .sort((a, b) => {
         if (a.identity !== b.identity)
