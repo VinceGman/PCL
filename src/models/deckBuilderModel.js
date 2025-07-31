@@ -46,6 +46,10 @@ class CardModel {
           card.metadata += `<b>Instant Spell</b>: This is a spell that you may cast at anytime, even if it's not your turn as long as you're responding to something.<br><br>`;
         }
 
+        if (card.type.includes("Titan")) {
+          card.metadata += `<b>Titan</b>: This creature's tap abilities may only be used once (each) until it enters the battlefield again.<br><br>`;
+        }
+
         const text = (card.text || "").toLowerCase();
 
         const matchedKeywords = keywords
