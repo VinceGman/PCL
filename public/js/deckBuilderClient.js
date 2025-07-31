@@ -279,9 +279,9 @@ function setDeckListCardsClickable() {
     </div>
     <div class="popUpDetails">
       <strong>${card.name}</strong><br/>
-      Converted Mana Cost: ${card.cmc}<br/>
-      Identity: ${card.identity}<br/>
-      ${card.metadata ? "Details —\n" + card.metadata + "<br/>" : ""}
+      <b>Cost</b>: ${card.cmc}<br/>
+      <b>Identity</b>: ${card.identity}<br/>
+      ${card.metadata ? "<br>" + card.metadata + "<br/>" : ""}
     </div>
   `;
 
@@ -358,9 +358,9 @@ function setCardListCardsClickable() {
     </div>
     <div class="popUpDetails">
       <strong>${card.name}</strong><br/>
-      Converted Mana Cost: ${card.cmc}<br/>
-      Identity: ${card.identity}<br/>
-      ${card.metadata ? "Details —\n" + card.metadata + "<br/>" : ""}
+      <b>Cost</b>: ${card.cmc}<br/>
+      <b>Identity</b>: ${card.identity}<br/>
+      ${card.metadata ? "<br>" + card.metadata + "<br/>" : ""}
     </div>
   `;
       infoBox.style.left = `${Math.min(

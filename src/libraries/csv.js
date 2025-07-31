@@ -1,16 +1,16 @@
-const axios = require('axios');
-const { parse } = require('csv-parse/sync');
+const axios = require("axios");
+const { parse } = require("csv-parse/sync");
 
 module.exports = {
-  async getCSVCards() {
-    const res = await axios.get(process.env.GOOGLE_SHEETS_CARDS_CSV);
+  async fetchCSV(link) {
+    const res = await axios.get(link);
     const records = parse(res.data, {
       columns: true, // first row as headers
-      skip_empty_lines: true
+      skip_empty_lines: true,
     });
     return records;
-  }
-}
+  },
+};
 
 // fs.createReadStream("https://docs.google.com/spreadsheets/d/e/2PACX-1vSMCI7J_Si1Su88MRcDi35BuBuzYky3hiVaimiQ6RJbMSR3kxtOt33wY-fBaRfziKjKSQShLz-JOznw/pub?gid=240707961&single=true&output=csv")
 //     .pipe(csv())
@@ -66,7 +66,6 @@ module.exports = {
 //     .on('end', () => {
 //         console.log('CSV processing complete.');
 //     });
-
 
 // /*
 
