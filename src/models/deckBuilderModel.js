@@ -50,6 +50,16 @@ class CardModel {
           card.metadata += `<b>Titan</b>: This creature's tap abilities may only be used once (each) until it enters the battlefield again.<br><br>`;
         }
 
+        if (card.type.includes("Weapon")) {
+          try {
+            card.metadata += `<b>Weapon</b>: This artifact has ${
+              card.stats.split("/")[0]
+            } attack and ${
+              card.stats.split("/")[1]
+            } durability counters. Weapons lose 1 durability counter when they untap.<br><br>`;
+          } catch (err) {}
+        }
+
         const text = (card.text || "").toLowerCase();
 
         const matchedKeywords = keywords
