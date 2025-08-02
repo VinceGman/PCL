@@ -177,31 +177,26 @@ body {
 }
 
 .decklistCard {
-  width: 170.88px;
+  width: 148.88px;
   height: 22px;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
-  background-size: 140%;
-  background-position: 15% 2.4%;
+  background-size: 162.5%;
+  background-position: 13% 2.6%;
   background-repeat: no-repeat;
 }
 
-
-/* .decklistCard {
-    width: 170.88px;
-    height: 22px;
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-} */
-
-/* .decklistCard img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 20% 1.4%;
-} */
+#rarity {
+  width: 22px;
+  height: 22px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background-size: 2000%;
+  background-position: 50% 93%;
+  background-repeat: no-repeat;
+}
 
 #cardCount {
     width: 19.2px;
