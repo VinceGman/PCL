@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #FFFFFF;
+    background-color: #313537;
+    color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -177,14 +178,16 @@ body {
 }
 
 .decklistCard {
-  width: 148.88px;
+  width: 170.88px;
   height: 22px;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
-  background-size: 162.5%;
+  background-size: 141.6%;
   background-position: 13% 2.6%;
   background-repeat: no-repeat;
+  display: flex;
+  justify-content: flex-end;
 }
 
 #rarity {

@@ -164,8 +164,9 @@ function renderDeckList() {
   deckList.innerHTML = deck
     .map(
       (card) => `
-    <div class="decklistCard" draggable="true" data-id="${card.id}" style="background-image: url('${card.image}');"></div>
+    <div class="decklistCard" draggable="true" data-id="${card.id}" style="background-image: url('${card.image}');">
     <div id="rarity" style="background-image: url('${card.image}');"></div>
+    </div>
     <div id="cardCount">${card.deckCopies}</div>
     `
     )
