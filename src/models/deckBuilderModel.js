@@ -56,7 +56,7 @@ class CardModel {
               card.stats.split("/")[0]
             } attack and ${
               card.stats.split("/")[1]
-            } durability counters. Weapons lose 1 durability counter when they untap and are sacrificed when they reach 0 durability counters.<br><br>`;
+            } durability counters. Weapons lose 1 durability counter when they attack and are sacrificed when they reach 0 durability counters.<br><br>`;
           } catch (err) {}
         }
 
