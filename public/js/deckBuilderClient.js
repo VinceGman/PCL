@@ -467,7 +467,7 @@ function loadDeckList() {
       continue;
     }
 
-    deck.push({ ...card, deckCopies });
+    deck.push({ ...card, deckCopies: Math.min(+deckCopies, card.copies) });
     updateSelection(id);
   }
 
