@@ -47,7 +47,7 @@ class CardModel {
         }
 
         if (card.type.includes("Titan")) {
-          card.metadata += `<b>Titan</b>: This creature's tap abilities may only be used once (each) until it enters the battlefield again.<br><br>`;
+          card.metadata += `<b>Titan</b>: This creature's tap abilities may only be used once (each) until it enters the battlefield again. You may only control one Titan creature at a time.<br><br>`;
         }
 
         if (card.type.includes("Weapon")) {
