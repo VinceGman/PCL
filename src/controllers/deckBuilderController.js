@@ -10,6 +10,11 @@ class DeckBuilderController {
     res.render("pages/cards", { cards: cards });
   }
 
+  async sendCardsAPI(req, res) {
+    const cards = await deckBuilderModel.getCards();
+    res.send({ cards });
+  }
+
   async generateCardSheet(req, res) {
     try {
       const urls = (req.query.urls || "").split(",").filter(Boolean);
