@@ -17,6 +17,7 @@ const bodyParser = require('body-parser');
 
 // Load route handlers
 const deckBuilderRoutes = require('./src/routes/deckBuilderRoutes');
+const mangoChessRoutes = require('./src/routes/mangoChessRoutes');
 
 // Initialize Express app
 const app = express();
@@ -33,13 +34,43 @@ app.use(bodyParser.json());
 
 // Define routes for specific paths
 app.use('/deckbuilder', deckBuilderRoutes);
+app.use('/mangochess', mangoChessRoutes);
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-// Start server on specified port when not in test environment
-if (process.env.NODE_ENV !== 'test') {
-    app.listen(port, () => console.log(`Server running on port: ${port}`));
-}
+const server = app.listen(port, () => {
+  console.log(`Server running on port: ${port}`);
+});
+
+// Setup Socket.IO with proper CORS
+const { Server } = require('socket.io');
+const io = new Server(server, {
+  cors: {
+    origin: '*', // Change to specific origin if needed
+    methods: ['GET', 'POST'],
+  },
+});
+
+// Handle Socket.IO connections
+io.on('connection', (socket) => {
+  console.log(`New client connected: ${socket.id}`);
+
+  // Listen for mouse data from client
+  socket.on('mouse', (data) => {
+    console.log(`Mouse data from ${socket.id}: x=${data.x}, y=${data.y}`);
+
+    // Broadcast to everyone except sender
+    socket.broadcast.emit('mouse', data);
+
+    // If you want to send to everyone including sender:
+    // io.emit('mouse', data);
+  });
+
+  // Handle disconnects
+  socket.on('disconnect', (reason) => {
+    console.log(`Client disconnected: ${socket.id} (${reason})`);
+  });
+});
 
 module.exports = app;
