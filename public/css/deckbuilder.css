@@ -10,34 +10,34 @@ body {
 #content {
     display: flex;
     flex-wrap: wrap;
-    width: 90vw;
-    max-width: 90vw;
-    min-width: 90vw;
-    height: 98vh;
-    max-height: 98vh;
-    min-height: 98vh;
+    width: 1728px; /* 90vw on w : 19.2 per vw*/
+    max-width: 1728px;
+    min-width: 1728px;
+    height: 925px; /* 98vw on h : 9.47 per vh*/
+    max-height: 925px;
+    min-height: 925px;
     overflow-y: hidden;
 }
 
 /* Upper panels */
 #deck-filter-panel {
-    width: 77.1vw;
-    height: 8vh;
-    min-width: 10vw;
-    min-height: 8vh;
+    width: 1497.6px;
+    height: 153.6px;
+    min-width: 192px;
+    min-height: 153.6px;
     border: 1px solid black;
     box-sizing: border-box;
-    padding: 1vw;
+    padding: 19.2px;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
 #deck-panel {
-    width: 10vw;
-    height: 8vh;
-    min-width: 10vw;
-    min-height: 8vh;
+    width: 192px;
+    height: 153.6px;
+    min-width: 192px;
+    min-height: 153.6px;
     border: 1px solid black;
     box-sizing: border-box;
     display: flex;
@@ -45,8 +45,8 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 0.3vw;
-    font-size: 1.1vw;
+    gap: 5.76px;
+    font-size: 21.12px;
 }
 
 #card-list-panel .card {
@@ -55,37 +55,37 @@ body {
 
 /* Lower panels */
 #card-list-panel {
-    width: 77.1vw;
-    height: 82.9vh;
-    min-width: 10vw;
-    min-height: 10vh;
+    width: 1497.6px;
+    height: 768px;
+    min-width: 192px;
+    min-height: 192px;
     overflow-y: auto;
-    max-height: 82.9vh;
+    max-height: 768px;
     border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    padding: 2.7vw;
-    gap: 1vw;
-    row-gap: 3.1vh;
+    padding: 52.8px;
+    gap: 20px;
+    row-gap: 60px;
     scrollbar-width: none;
 }
 
 #deck-list-and-code-panel {
-    width: 10vw;
-    height: 82.9vh;
-    min-width: 10vw;
-    min-height: 10vh;
-    max-height: 82.9vh;
+    width: 192px;
+    height: 768px;
+    min-width: 192px;
+    min-height: 192px;
+    max-height: 768px;
     border: 1px solid black;
     box-sizing: border-box;
 }
 
 #deck-list-panel {
-    width: 10vw;
-    height: 73.7vh;
-    min-width: 10vw;
-    min-height: 8vh;
+    width: 192px;
+    height: 681.6px;
+    min-width: 192px;
+    min-height: 153.6px;
     box-sizing: border-box;
     overflow-y: auto;
     display: flex;
@@ -95,15 +95,15 @@ body {
 }
 
 #deck-code-panel {
-    width: 9.8vw;
-    height: 9.3vh;
-    min-width: 9.8vw;
-    min-height: 9.3vh;
+    width: 190.08px;
+    height: 86.4px;
+    min-width: 190.08px;
+    min-height: 86.4px;
     border-top: 1px solid #000;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.2vw;
+    gap: 4px;
     justify-content: center;
     align-items: center;
     align-content: flex-start;
@@ -117,9 +117,9 @@ body {
 }
 
 .card {
-    width: 11.2vw;
-    height: 32.5vh;
-    border-radius: 0.5vw;
+    width: 215px;
+    height: 301px;
+    border-radius: 10px;
     position: relative;
     overflow: hidden;
 }
@@ -136,26 +136,26 @@ body {
   flex-wrap: nowrap !important;
   align-items: flex-start !important;
   width: max-content !important;
-  max-width: 35.5vw !important;
+  max-width: 691.2px !important;
   background: #fff;
   border: 1px solid #ccc;
-  padding: 0.4vw;
-  border-radius: 0.3vw;
-  box-shadow: 0 0.1vw 0.5vw rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   position: absolute;
   z-index: 1000;
   pointer-events: none;
   user-select: none;
   gap: 1rem;
-  top: 1vw;
-  left: 1vw;
+  top: 19.2px;
+  left: 19.2px;
 }
 
 .popUpCard {
   flex-shrink: 0;
-  width: 17.9vw;
-  height: 52.3vh;
-  border-radius: 0.5vw;
+  width: 345.6px;
+  height: 483.84 px;
+  border-radius: 10px;
   overflow: hidden;
   user-select: none;
   pointer-events: none;
@@ -165,7 +165,7 @@ body {
 .popUpCard img {
   width: 100%;
   height: 100%;
-  max-width: 17.9vw;
+  max-width: 345.6px;
   object-fit: cover;
   user-select: none;
   pointer-events: none;
@@ -178,9 +178,9 @@ body {
 }
 
 .decklistCard {
-  width: 8.8vw;
-  height: 2.4vh;
-  border-radius: 0.5vw;
+  width: 170.88px;
+  height: 22px;
+  border-radius: 10px;
   position: relative;
   overflow: hidden;
   background-size: 141.6%;
@@ -191,9 +191,9 @@ body {
 }
 
 #rarity {
-  width: 1.1vw;
-  height: 2.4vh;
-  border-radius: 0.5vw;
+  width: 22px;
+  height: 22px;
+  border-radius: 10px;
   position: relative;
   overflow: hidden;
   background-size: 2000%;
@@ -202,25 +202,25 @@ body {
 }
 
 #cardCount {
-    width: 1vw;
-    height: 2.1vh;
+    width: 19.2px;
+    height: 19.2px;
     border-radius: 5%;
     justify-content: center;
     align-items: center;
     text-align: center;
     display: flex;
     box-sizing: border-box;
-    border: 0.1vw solid black;
+    border: 2px solid black;
     background-color: transparent;
     padding-top: 1%;
     margin-top: 1%;
 }
 
 #card-input {
-    border: 0.1vw solid #ccc;
-    border-radius: 0.3vw;
+    border: 2px solid #ccc;
+    border-radius: 5px;
     width: 100%;
-    max-width: 12.2vw;
+    max-width: 235px;
 }
 
 @keyframes flash {
@@ -250,6 +250,11 @@ body {
   z-index: 2;
 }
 
+/* @keyframes flashCard {
+  0% { background-color: rgba(255, 255, 255, 0.6); }
+  100% { background-color: transparent; }
+} */
+
 @keyframes flashCard {
   0% { background-color: rgba(255, 255, 255, 0.6); }
   100% { background-color: rgba(255, 255, 255, 0); }
@@ -261,11 +266,12 @@ body {
   user-select: none;
 }
 
+
 .decklistCard::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0); /* Start transparent */
   pointer-events: none;
   z-index: 1;
 }
@@ -274,3 +280,37 @@ body {
   animation: flashCard 0.5s ease;
   z-index: 2;
 }
+
+/* @keyframes flashCard {
+  0% { background-color: rgba(255, 255, 255, 0.6); }
+  100% { background-color: transparent; }
+} */
+
+
+/* #cards-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+    background: none;
+    max-width: 300px;
+}
+
+#cards-checklist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.cards-checklist-item {
+    flex: 1 1 auto;
+    margin: 5px;
+    font-size: smaller;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.card-warning-icon {
+    color: red;
+    margin-left: -2px;
+} */
