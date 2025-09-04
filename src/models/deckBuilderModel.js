@@ -17,6 +17,8 @@ class CardModel {
         fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.webp`))
       )
       .map((card) => {
+        card.metadata += card.metadata ? "<br><br>" : "";
+
         if (
           ((card.type.includes("Creature") &&
             card.rarity.includes("Legendary")) ||
