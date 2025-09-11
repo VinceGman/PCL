@@ -110,7 +110,7 @@ body {
     padding-top: 2.5%;
 }
 
-.copy-code-btn, .enter-code-btn, .delete-deck-btn, .download-deck-btn {
+.copy-code-btn, .enter-code-btn, .delete-deck-btn {
   flex: 0 1 auto;
   max-width: 49%;
   height: auto;

@@ -130,17 +130,6 @@ document.querySelector(".delete-deck-btn").addEventListener("click", () => {
 });
 
 // DONE
-document.querySelector(".download-deck-btn").addEventListener("click", (e) => {
-  e.preventDefault();
-
-  const url = `/deckbuilder/tts-sheet?urls=${encodeURIComponent(
-    deck.flatMap((card) => Array(card.deckCopies).fill(card.image)).join(",")
-  )}`;
-
-  window.location.href = url;
-});
-
-// DONE
 function renderCardList(filteredCards) {
   const cardList = document.getElementById("card-list-panel");
   cardList.innerHTML = filteredCards

@@ -1,7 +1,5 @@
 // require utilized models
 // const mangoChessModel = require("../models/mangoChessModel");
-const sharp = require("sharp");
-const axios = require("axios");
 
 class MangoChessController {
   async newGame(req, res) {
