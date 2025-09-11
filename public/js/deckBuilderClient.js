@@ -23,8 +23,8 @@ function addCard(id, maxCount) {
     countToAdd = card.copies;
   }
 
-  countToAdd = Math.min(69 - totalCards, countToAdd);
-  if (countToAdd <= 0) return;
+  // countToAdd = Math.min(69 - totalCards, countToAdd);
+  // if (countToAdd <= 0) return;
 
   if (!deckCard) {
     deck.push({ ...card, deckCopies: countToAdd });
@@ -525,10 +525,10 @@ function renderDeckCode() {
 // DONE
 function renderDeckPanel() {
   const totalCardsText = document.getElementById("totalCards");
-  totalCardsText.innerHTML = `Cards: ${totalCards}/69`;
+  totalCardsText.innerHTML = `Cards: ${totalCards}`;
 
   const totalDeckText = document.getElementById("totalDeck");
-  totalDeckText.innerHTML = `Deck: ${totalDeck}/60`;
+  totalDeckText.innerHTML = `Deck: ${totalDeck}`;
 
   const totalSideboardText = document.getElementById("totalSideboard");
   if (totalSideboard > 0) {
@@ -536,7 +536,7 @@ function renderDeckPanel() {
   } else {
     totalSideboardText.innerHTML = ``;
   }
-  totalDeckText.innerHTML = `Deck: ${totalDeck}/60`;
+  totalDeckText.innerHTML = `Deck: ${totalDeck}`;
 
   const totalRunesText = document.getElementById("totalRunes");
   if (totalRunes > 0) {
