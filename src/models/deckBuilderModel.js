@@ -14,7 +14,7 @@ class CardModel {
 
     const cards = (await csv.fetchCSV(process.env.GOOGLE_SHEETS_CARDS_CSV))
       .filter((card) =>
-        fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.webp`))
+        fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.jpg`))
       )
       .map((card) => {
         card.metadata += card.metadata ? "<br><br>" : "";
@@ -80,7 +80,7 @@ class CardModel {
           id: +card.id,
           cmc: +card.cmc,
           copies: +card.copies,
-          image: `https://raw.githubusercontent.com/VinceGman/PCL/refs/heads/main/Cards/${card.id}.webp`,
+          image: `https://raw.githubusercontent.com/VinceGman/PCL/refs/heads/main/Cards/${card.id}.jpg`,
           metadata: card.metadata
             ? card.metadata + matchedKeywords
             : matchedKeywords,
