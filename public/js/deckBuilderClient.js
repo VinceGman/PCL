@@ -130,6 +130,28 @@ document.querySelector(".delete-deck-btn").addEventListener("click", () => {
 });
 
 // DONE
+document.querySelector(".import-deck-btn").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const import_code = deck.map((card) => ({
+    id: card.id,
+    name: card.name,
+    type: card.type,
+    rarity: card.rarity,
+    copies: card.deckCopies,
+  }));
+
+  navigator.clipboard
+    .writeText(JSON.stringify(import_code))
+    .then(() => {
+      console.log("Copied to clipboard!");
+    })
+    .catch((err) => {
+      console.error("Failed to copy: ", err);
+    });
+});
+
+// DONE
 function renderCardList(filteredCards) {
   const cardList = document.getElementById("card-list-panel");
   cardList.innerHTML = filteredCards
