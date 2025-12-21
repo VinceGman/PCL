@@ -23,6 +23,7 @@ const bodyParser = require("body-parser");
 // Load route handlers
 const deckBuilderRoutes = require("./src/routes/deckBuilderRoutes");
 const mangoChessRoutes = require("./src/routes/mangoChessRoutes");
+const rankTrackerRoutes = require("./src/routes/rankTrackerRoutes");
 
 // Initialize Express app
 const app = express();
@@ -40,6 +41,7 @@ app.use(bodyParser.json());
 // Define routes for specific paths
 app.use("/deckbuilder", deckBuilderRoutes);
 app.use("/mangochess", mangoChessRoutes);
+app.use("/ranktracker", rankTrackerRoutes);
 
 // Serve static files from the 'public' directory
 app.use(express.static("public"));
