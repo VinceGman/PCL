@@ -7,46 +7,11 @@ class RedisClient extends Redis {
 
         this.on('connect', async () => {
             // console.log('Redis: Successful');
-            // await this.initializeIndexes();
         });
 
         this.on('error', (err) => {
             console.error('Redis: Failed =>', err);
         });
-    }
-
-    async initializeIndexes() {
-        try {
-            const indexes = await this.call('FT._LIST');
-            console.log('Indexes:', indexes);
-            // if (!indexes.includes('member_index')) {
-            //     await this.call('FT.CREATE', [
-            //         'member_index',
-            //         'ON', 'JSON',
-            //         'PREFIX', '1', 'member:',
-            //         'SCHEMA',
-            //         '$.id', 'AS', 'id', 'TEXT',
-            //         '$.update_timestamp', 'AS', 'update_timestamp', 'NUMERIC'
-            //     ]);
-            // }
-
-            // await this.call('FT.DROPINDEX', 'member_index'); // to delete index
-        } catch (err) {
-            console.error('Error Initializing Index:', err);
-        }
-
-        // search index
-        // const results = await this.call(
-        //     'FT.SEARCH',
-        //     'member_index',
-        //     '*',
-        //     'SORTBY', 'update_timestamp',
-        //     'ASC',
-        //     'LIMIT', '0', '1'
-        // );
-
-
-        // console.log(results);
     }
 
     // options
@@ -106,9 +71,10 @@ class RedisClient extends Redis {
 
     // options: { path?: string }
     async set(key, data, options = {}) {
-        const { path = '$' } = options;
+        const { path = '$', ttl = 86400 } = options;
         try {
             const result = await this.call('JSON.SET', key, path, JSON.stringify(data));
+            // await super.expire(key, ttl);
             return result === 'OK';
         } catch (err) {
             console.error(`Redis Error => { Method: set, Key: ${key}, ${err.toString()} }`);
