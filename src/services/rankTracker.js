@@ -1,7 +1,3 @@
-// User: https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/oLTyYjIVyWNZdM8ethquIUVZGNkF_WxlWlcLy0x20y265UqgfTxx1AVwazMn07UHEW_0ynB5U8-RRQ/ids?queue=420&type=ranked&start=0&count=20&api_key=RGAPI-5ffb18ab-11b4-4ebd-9b8b-192d0a76407f
-
-// Summoner: https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/oLTyYjIVyWNZdM8ethquIUVZGNkF_WxlWlcLy0x20y265UqgfTxx1AVwazMn07UHEW_0ynB5U8-RRQ?api_key=RGAPI-5ffb18ab-11b4-4ebd-9b8b-192d0a76407f
-
 const storage = require("../libraries/storage");
 const cron = require("node-cron");
 const axios = require("axios");
