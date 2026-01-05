@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="stylesheet" href="/css/ranktracker.css">
     <title>Rank Tracker</title>
-    <script src="/js/rankTrackerClient.js"></script>
   </head>
   <body>
+    <div class="center"></div>
   </body>
+    <!--
+        The script is lined after the body 
+        because the code inside index.js immediately runs. 
+    -->
+    
+    <script>
+        window.players = <%- JSON.stringify(players) %>;
+    </script>
+    <script src="/js/rankTrackerClient.js"></script>
 </html>

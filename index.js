@@ -7,9 +7,10 @@ const { firestore } = require("./database/firestore");
 const redis = require("./cache/redis");
 (async () => {
   // await redis.clear();
-  // await redis.del("services:rankTracker:users:oLTyYjIVyWNZdM8ethquIUVZGNkF_WxlWlcLy0x20y265UqgfTxx1AVwazMn07UHEW_0ynB5U8-RRQ");
+  // await redis.del("services:rankTracker");
   // await redis.del("services:rankTracker:users:-J9cExhq9AEky_WkcNPS-UwY6WEawfUQua6yz06ORptrgjDp4ef4N7duYtkgmVL8HucipelytTCfBg");
   // console.log(await redis.keys("service", { sort: true }));
+  // console.log(await redis.keys());
 })();
 
 const serviceRunner = require("./src/libraries/serviceRunner");

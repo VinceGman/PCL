@@ -8,7 +8,7 @@ module.exports = {
   async execute() {
     updateRanks();
 
-    cron.schedule("*/10 * * * *", () => {
+    cron.schedule("* * * * *", () => {
       updateRanks();
     });
   },
@@ -31,6 +31,7 @@ async function updateRanks() {
       rank: "X",
       lp: 0,
       hotStreak: false,
+      remakes: 0,
     };
 
     try {
