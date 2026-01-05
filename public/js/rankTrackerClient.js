@@ -11,8 +11,8 @@ window.players.forEach((player) => {
 });
 
 const margin = { top: 50, right: 20, bottom: 50, left: 50 };
-const width = 800 - margin.left - margin.right;
-const height = 470 - margin.top - margin.bottom;
+const width = (800 * 1.5) - margin.left - margin.right;
+const height = (470 * 1.5) - margin.top - margin.bottom;
 
 // Create SVG container
 const svg = d3
@@ -154,3 +154,34 @@ lines.forEach((line) => {
       .style("stroke-dasharray", "4 4");
   }
 });
+
+// Legend
+const legend = svg
+  .append("g")
+  .attr("transform", `translate(${width - 80}, 0)`);
+
+const legendItem = legend
+  .selectAll(".legend-item")
+  .data(window.players.map((p) => p.name))
+  .enter()
+  .append("g")
+  .attr("class", "legend-item")
+  .attr("transform", (_, i) => `translate(0, ${i * 20})`);
+
+legendItem
+  .append("line")
+  .attr("x1", 0)
+  .attr("y1", 10)
+  .attr("x2", 20)
+  .attr("y2", 10)
+  .attr("stroke", (d) => colorScale(d))
+  .attr("stroke-width", 3);
+
+legendItem
+  .append("text")
+  .attr("x", 26)
+  .attr("y", 10)
+  .attr("dy", "0.35em")
+  .attr("font-family", "sans-serif")
+  .attr("font-size", "12px")
+  .text((d) => d);
