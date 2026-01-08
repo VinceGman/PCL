@@ -1,6 +1,5 @@
 let filteredNames = []; //, "Sore", "Hydrione", "John Snow"];
 let filteredPlayers = [];
-filteredPlayers = filterPlayers(window.players);
 
 function drawGraph(players) {
   const margin = { top: 50, right: 20, bottom: 50, left: 50 };
@@ -220,9 +219,6 @@ playerList.addEventListener("click", (e) => {
   drawGraph(filteredPlayers);
 });
 
-// Initial draw
-drawGraph(filteredPlayers);
-
 // Redraw graph on window resize
 window.addEventListener("resize", () =>
   drawGraph(filterPlayers(window.players))
@@ -250,11 +246,10 @@ async function fetchPlayersAndDraw() {
   const res = await fetch("/rankTracker/json");
   window.players = await res.json();
 
-  filteredPlayers = filterPlayers(window.players);
-
   // Clear previous graph if necessary
   d3.select(".rankTrackerGraph").selectAll("*").remove();
 
+  filteredPlayers = filterPlayers(window.players);
   drawGraph(filteredPlayers); // your graph drawing function using the new data
 }
 
