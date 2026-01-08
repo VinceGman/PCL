@@ -4,11 +4,11 @@ const axios = require("axios");
 
 module.exports = {
   name: "rankTracker",
-  type: "development",
+  type: "production",
   async execute() {
     updateRanks();
 
-    cron.schedule("* * * * *", () => {
+    cron.schedule("*/10 * * * *", () => {
       updateRanks();
     });
   },
@@ -32,11 +32,13 @@ async function updateRanks() {
       lp: 0,
       hotStreak: false,
       remakes: 0,
+      mmr: 0,
     };
 
     try {
       const url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/${acc.puuid}?api_key=${process.env.RIOT_KEY}`;
       const response = await axios.get(url);
+      console.log(response);
       const rankedData = response.data.filter(
         (data) => data.queueType == "RANKED_SOLO_5x5"
       )?.[0];
@@ -102,6 +104,7 @@ async function updateRanks() {
           mmr += 0;
       }
 
+      playerData.mmr = mmr;
       playerData.wins = rankedData.wins;
       playerData.losses = rankedData.losses;
       playerData.timeseries.push({ game: games, mmr: mmr });

@@ -8,13 +8,13 @@
     <title>Rank Tracker</title>
   </head>
   <body>
-    <div class="center"></div>
+  <div class="rankTrackerUI">
+  <div class="rankTrackerInner">
+    <div class="rankTrackerGraph"></div>
+    <div class="rankTrackerPlayers"></div>
+  </div>
+  </div>
   </body>
-    <!--
-        The script is lined after the body 
-        because the code inside index.js immediately runs. 
-    -->
-    
     <script>
         window.players = <%- JSON.stringify(players) %>;
     </script>

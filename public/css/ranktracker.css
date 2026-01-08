@@ -1,12 +1,96 @@
 html, body {
   height: 100%;
   margin: 0;
-  background-color: #fff;
+  overflow: hidden;
+  background-color: #ddd;
 }
 
-.center {
+.rankTrackerUI {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
+}
+
+.rankTrackerInner {
+  display: flex;
+  width: 100%;
+  max-width: 80vw;
+  align-items: center;
+}
+
+.rankTrackerGraph {
+  flex: 8 1 0;
+  min-width: 0;
+  height: 80vh;
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid black;
+}
+
+.rankTrackerPlayers {
+  flex: 2 1 0;
+  min-width: 0;
+  height: 80vh;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid black;
+}
+
+.player {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 7.75vh;
+  position: relative;
+}
+
+.selected {
+  background-color: #eee;
+}
+
+.name {
+  font-size: 2vh;
+  position: absolute;
+  top: 0.5vh;
+  left: 0.25vw;
+}
+
+.rank {
+  font-size: 2vh;
+  position: absolute;
+  top: 3.05vh;
+  left: 0.25vw;
+}
+
+.lp {
+  font-size: 1.5vh;
+  position: absolute;
+  top: 5.5vh;
+  left: 0.25vw;
+}
+
+.winloss {
+  font-size: 1.5vh;
+  position: absolute;
+  top: 3.5vh;
+  right: 0.25vw;
+  text-align: right;
+}
+
+.winrate {
+  font-size: 1.5vh;
+  position: absolute;
+  top: 5.5vh;
+  right: 0.25vw;
+  text-align: right;
+}
+
+.color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
 }
