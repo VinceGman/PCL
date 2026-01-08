@@ -234,7 +234,7 @@ function filterPlayers(players) {
   }
   players.forEach((player) => {
     player.timeseries.sort((a, b) => a.game - b.game);
-    player.timeseries.forEach((d, i) => (d.game = i + 1));
+    // player.timeseries.forEach((d, i) => (d.game = i + 1));
   });
 
   const sortedPlayers = [...players].sort((a, b) => {
