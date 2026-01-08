@@ -8,8 +8,10 @@ const redis = require("./cache/redis");
 (async () => {
   // await redis.clear();
   // await redis.del("services:rankTracker");
-  // await redis.del("services:rankTracker:users:-J9cExhq9AEky_WkcNPS-UwY6WEawfUQua6yz06ORptrgjDp4ef4N7duYtkgmVL8HucipelytTCfBg");
   // console.log(await redis.keys("service", { sort: true }));
+  // for (let key of await redis.keys("service", { sort: true })) {
+  //   await redis.del(key);
+  // }
   // console.log(await redis.keys());
 })();
 
