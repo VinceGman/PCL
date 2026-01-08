@@ -4,7 +4,7 @@ const axios = require("axios");
 
 module.exports = {
   name: "rankTracker",
-  type: "production",
+  type: "development",
   async execute() {
     updateRanks();
 
