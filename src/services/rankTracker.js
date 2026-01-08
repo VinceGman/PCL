@@ -8,7 +8,7 @@ module.exports = {
   async execute() {
     updateRanks();
 
-    cron.schedule("* * * * *", () => {
+    cron.schedule("*/10 * * * *", () => {
       updateRanks();
     });
   },
