@@ -38,7 +38,6 @@ async function updateRanks() {
     try {
       const url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/${acc.puuid}?api_key=${process.env.RIOT_KEY}`;
       const response = await axios.get(url);
-      console.log(response);
       const rankedData = response.data.filter(
         (data) => data.queueType == "RANKED_SOLO_5x5"
       )?.[0];

@@ -237,13 +237,13 @@ function filterPlayers(players) {
     player.timeseries.forEach((d, i) => (d.game = i + 1));
   });
 
-  players.sort((a, b) => {
+  const sortedPlayers = [...players].sort((a, b) => {
     const aLatest = a.timeseries[a.timeseries.length - 1]?.mmr || 0;
     const bLatest = b.timeseries[b.timeseries.length - 1]?.mmr || 0;
-    return bLatest - aLatest; // highest MMR first
+    return bLatest - aLatest;
   });
 
-  return players;
+  return sortedPlayers;
 }
 
 async function fetchPlayersAndDraw() {
