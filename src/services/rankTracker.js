@@ -19,22 +19,6 @@ async function updateRanks() {
   const accounts = service.accounts;
 
   for (const acc of accounts) {
-    const playerData = (await storage.pull(
-      `services:rankTracker:users:${acc.puuid}`
-    )) ?? {
-      name: acc.name,
-      puuid: acc.puuid,
-      wins: 0,
-      losses: 0,
-      timeseries: [],
-      tier: "UNPLACED",
-      rank: "X",
-      lp: 0,
-      hotStreak: false,
-      remakes: 0,
-      mmr: 0,
-    };
-
     try {
       const url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/${acc.puuid}?api_key=${process.env.RIOT_KEY}`;
       const response = await axios.get(url);
@@ -42,6 +26,22 @@ async function updateRanks() {
         (data) => data.queueType == "RANKED_SOLO_5x5"
       )?.[0];
       if (!rankedData) continue;
+
+      const playerData = (await storage.pull(
+        `services:rankTracker:users:${acc.puuid}`
+      )) ?? {
+        name: acc.name,
+        puuid: acc.puuid,
+        wins: 0,
+        losses: 0,
+        timeseries: [],
+        tier: "UNPLACED",
+        rank: "X",
+        lp: 0,
+        hotStreak: false,
+        remakes: 0,
+        mmr: 0,
+      };
 
       const games = rankedData.wins + rankedData.losses;
       if (

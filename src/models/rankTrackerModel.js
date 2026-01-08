@@ -10,7 +10,7 @@ class PlayerModel {
     const accounts = service.accounts;
 
     for (const account of accounts) {
-      const player = await storage.pull(
+      const player = await storage.clientPull(
         `services:rankTracker:users:${account.puuid}`
       );
 

@@ -13,6 +13,10 @@ module.exports = {
         await redis.set(address, data, options);
         return data;
     },
+    async clientPull(address, options) {
+        let data = await redis.get(address, options);
+        return data;
+    },
     async push(address, data, options) { // always writes to both cache and database
         // options: { path?: string, ttl?: number }
         await firestore.doc(address.replace(/:/g, '/')).set(data, { merge: true });
