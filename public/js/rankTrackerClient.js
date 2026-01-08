@@ -224,7 +224,9 @@ playerList.addEventListener("click", (e) => {
 drawGraph(filteredPlayers);
 
 // Redraw graph on window resize
-window.addEventListener("resize", () => drawGraph(window.players));
+window.addEventListener("resize", () =>
+  drawGraph(filterPlayers(window.players))
+);
 
 function filterPlayers(players) {
   if (filteredNames.length > 0) {
