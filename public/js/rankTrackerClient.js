@@ -1,5 +1,6 @@
 let filteredNames = []; //, "Sore", "Hydrione", "John Snow"];
 let filteredPlayers = [];
+window.players = filterPlayers(window.players);
 
 function drawGraph(players) {
   const margin = { top: 50, right: 20, bottom: 50, left: 50 };
@@ -244,7 +245,11 @@ function filterPlayers(players) {
 
 async function fetchPlayersAndDraw() {
   const res = await fetch("/rankTracker/json");
-  window.players = await res.json();
+  window.players = (await res.json()).sort((a, b) => {
+    const aLatest = a.timeseries[a.timeseries.length - 1]?.mmr || 0;
+    const bLatest = b.timeseries[b.timeseries.length - 1]?.mmr || 0;
+    return bLatest - aLatest;
+  });
 
   // Clear previous graph if necessary
   d3.select(".rankTrackerGraph").selectAll("*").remove();
