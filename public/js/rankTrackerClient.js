@@ -12,7 +12,7 @@ const tooltip = d3
   .style("color", "#000")
   .style("padding", "4px 8px")
   .style("border-radius", "4px")
-  .style("font-size", "12px")
+  .style("font-size", "16px")
   .style("opacity", 0);
 
 function drawGraph(players) {
