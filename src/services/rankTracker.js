@@ -2,7 +2,7 @@ const storage = require("../libraries/storage");
 const cron = require("node-cron");
 const axios = require("axios");
 
-// let service_locked = false;
+let service_locked = false;
 
 // beginning of season timestamp in seconds: 1767902400
 
@@ -41,8 +41,12 @@ module.exports = {
 };
 
 async function updateRanks() {
-  // if (service_locked) return;
-  // service_locked = true;
+  if (service_locked) {
+    console.log("SERVICE: DENIED");
+    return;
+  }
+  console.log("SERVICE: LOCKED");
+  service_locked = true;
 
   try {
     const service = await storage.pull(`services:rankTracker`);
@@ -51,9 +55,11 @@ async function updateRanks() {
 
     for (const acc of accounts) {
       try {
-        const url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/${acc.puuid}?api_key=${process.env.RIOT_KEY}`;
-        const response = await axios.get(url);
-        const rankedData = response.data.filter(
+        await new Promise((r) => setTimeout(r, delay));
+        const rank_url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/${acc.puuid}?api_key=${process.env.RIOT_KEY}`;
+        console.log(`PULLING: ${acc.name}`);
+        const rank_res = await axios.get(rank_url);
+        const rankedData = rank_res.data.filter(
           (data) => data.queueType == "RANKED_SOLO_5x5"
         )?.[0];
         if (!rankedData) continue;
@@ -148,18 +154,27 @@ async function updateRanks() {
           playerData
         );
 
-        // await storage.push(`services:rankTracker:games:${acc.puuid}-${games}`, {
-        //   puuid: acc.puuid,
-        //   game: games,
-        //   mmr: mmr,
-        //   hotStreak: playerData.hotStreak,
-        // }); // individual game data
+        await new Promise((r) => setTimeout(r, delay));
+        const gameID_url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${acc.puuid}/ids?queue=420&type=ranked&count=1&api_key=${process.env.RIOT_KEY}`;
+        console.log(`PULLING LATEST MATCH: ${acc.name}`);
+        const gameID_res = await axios.get(gameID_url);
+        const gameID = gameID_res.data?.[0];
+        if (!gameID) continue;
+
+        console.log(`FOUND: ${gameID}`);
+
+        await storage.push(`services:rankTracker:games:${gameID}`, {
+          puuid: acc.puuid,
+          game: games,
+          mmr: mmr,
+          hotStreak: playerData.hotStreak,
+        }); // individual game data
       } catch (err) {
         console.error(err);
       }
-      await new Promise((r) => setTimeout(r, delay));
     }
   } finally {
-    // service_locked = false;
+    console.log("SERVICE: UNLOCKED");
+    service_locked = false;
   }
 }
