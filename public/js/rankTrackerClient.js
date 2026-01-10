@@ -2,18 +2,31 @@ let filteredNames = [];
 let filteredPlayers = [];
 window.players = filterPlayers(window.players, []);
 
+const tooltip = d3
+  .select("body")
+  .append("div")
+  .attr("class", "graph-tooltip")
+  .style("position", "absolute")
+  .style("pointer-events", "none")
+  .style("background", "#eee")
+  .style("color", "#000")
+  .style("padding", "4px 8px")
+  .style("border-radius", "4px")
+  .style("font-size", "12px")
+  .style("opacity", 0);
+
 function drawGraph(players) {
   const margin = { top: 50, right: 20, bottom: 50, left: 50 };
   const container = document.querySelector(".rankTrackerGraph");
 
   // Flatten all timeseries for scales
-  const allData = filteredPlayers.flatMap((p) => p.timeseries);
+  const allData = players.flatMap((p) => p.timeseries);
   const mmrMax = d3.max(allData, (d) => d.mmr);
   const yMax = Math.ceil(mmrMax / 400) * 400;
   const yMin = d3.min(allData, (d) => d.mmr);
 
   const colorScale = d3
-    .scaleOrdinal(d3.schemeCategory10)
+    .scaleOrdinal(d3.schemeTableau10) // https://d3js.org/d3-scale-chromatic/categorical
     .domain(window.players.map((p) => p.name));
 
   const circleScale = d3
@@ -58,12 +71,12 @@ function drawGraph(players) {
 
   const yScale = d3.scaleLinear().domain([yMin, yMax]).range([height, 0]);
 
-  // Draw each player's line and points
   players.forEach((player) => {
     const data = player.timeseries;
 
-    svg
-      .append("path")
+    const g = svg.append("g"); // group for this player
+
+    g.append("path")
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", colorScale(player.name))
@@ -73,16 +86,38 @@ function drawGraph(players) {
         valueline.x((d) => xScale(d.game)).y((d) => yScale(d.mmr))
       );
 
-    svg
-      .selectAll(`circle.${player.name}`)
+    g.selectAll("circle")
       .data(data)
       .enter()
       .append("circle")
       .attr("cx", (d) => xScale(d.game))
       .attr("cy", (d) => yScale(d.mmr))
-      .attr("r", (d) => circleScale(10))
+      .attr("r", 3) // visual size
       .attr("fill", colorScale(player.name))
       .style("opacity", 0.8);
+
+    // add invisible larger circle on top for easier hover
+    g.selectAll("circle.hit")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("class", "hit")
+      .attr("cx", (d) => xScale(d.game))
+      .attr("cy", (d) => yScale(d.mmr))
+      .attr("r", 10) // larger hit area
+      .style("fill", "transparent")
+      .style("pointer-events", "all")
+      .on("mouseover", (event, d) => {
+        tooltip
+          .style("opacity", 1)
+          .html(`${player.name}<br>game: ${d.game}<br>mmr: ${d.mmr}`);
+      })
+      .on("mousemove", (event) => {
+        tooltip
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 20 + "px");
+      })
+      .on("mouseout", () => tooltip.style("opacity", 0));
   });
 
   // Axes
