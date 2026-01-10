@@ -6,7 +6,11 @@ class RedisClient extends Redis {
         super(options);
 
         this.on('connect', async () => {
-            // console.log('Redis: Successful');
+            const info = await this.info("memory");
+            const line = info.split("\n").find((l) => l.startsWith("used_memory:"));
+            const usedBytes = parseInt(line.split(":")[1], 10);
+            const usedMB = Math.ceil(usedBytes / 1024 / 1024);
+            console.log(`Usage: ~${usedMB}MB/250MB`);
         });
 
         this.on('error', (err) => {
