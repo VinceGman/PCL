@@ -8,7 +8,7 @@ module.exports = {
   async execute() {
     updateRanks();
 
-    cron.schedule("*/10 * * * *", () => {
+    cron.schedule("* * * * *", () => {
       updateRanks();
     });
   },
@@ -17,6 +17,7 @@ module.exports = {
 async function updateRanks() {
   const service = await storage.pull(`services:rankTracker`);
   const accounts = service.accounts;
+  const delay = service.delay;
 
   for (const acc of accounts) {
     try {
@@ -116,5 +117,6 @@ async function updateRanks() {
     } catch (err) {
       console.error(err);
     }
+    await new Promise((r) => setTimeout(r, delay));
   }
 }
