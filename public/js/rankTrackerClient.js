@@ -194,6 +194,11 @@ function drawGraph(players) {
             (player.wins / (player.wins + player.losses)) *
             100
           ).toFixed(2)}% W/R</div>
+          <div class="lppergame">${
+            player.lppergame >= 0 ? "+" : ""
+          }${player.lppergame.toFixed(2)} LP/G (${
+        player.totalLPChange >= 0 ? "+" : ""
+      }${player.totalLPChange} LP)</div>
         </div>
       `;
     })
@@ -231,6 +236,16 @@ function filterPlayers(players) {
   }
   players.forEach((player) => {
     player.timeseries.sort((a, b) => a.game - b.game);
+
+    const first = player.timeseries[0]?.mmr || 0;
+    const last = player.timeseries[player.timeseries.length - 1]?.mmr || 0;
+    player.totalLPChange = last - first;
+
+    player.lppergame =
+      player.timeseries.length - 1 <= 0
+        ? 0
+        : player.totalLPChange / (player.timeseries.length - 1);
+
     // player.timeseries.forEach((d, i) => (d.game = i + 1));
   });
 
