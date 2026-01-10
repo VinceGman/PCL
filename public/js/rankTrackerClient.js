@@ -1,6 +1,6 @@
-let filteredNames = []; //, "Sore", "Hydrione", "John Snow"];
+let filteredNames = [];
 let filteredPlayers = [];
-window.players = filterPlayers(window.players);
+window.players = filterPlayers(window.players, []);
 
 function drawGraph(players) {
   const margin = { top: 50, right: 20, bottom: 50, left: 50 };
@@ -221,18 +221,18 @@ playerList.addEventListener("click", (e) => {
     filteredNames.push(player.name);
   }
 
-  filteredPlayers = filterPlayers(window.players);
+  filteredPlayers = filterPlayers(window.players, filteredNames);
   drawGraph(filteredPlayers);
 });
 
 // Redraw graph on window resize
 window.addEventListener("resize", () =>
-  drawGraph(filterPlayers(window.players))
+  drawGraph(filterPlayers(window.players, filteredNames))
 );
 
-function filterPlayers(players) {
-  if (filteredNames.length > 0) {
-    players = players.filter((p) => filteredNames.includes(p.name));
+function filterPlayers(players, names) {
+  if (names.length > 0) {
+    players = players.filter((p) => names.includes(p.name));
   }
   players.forEach((player) => {
     player.timeseries.sort((a, b) => a.game - b.game);
@@ -262,16 +262,12 @@ function filterPlayers(players) {
 
 async function fetchPlayersAndDraw() {
   const res = await fetch("/rankTracker/json");
-  window.players = (await res.json()).sort((a, b) => {
-    const aLatest = a.timeseries[a.timeseries.length - 1]?.mmr || 0;
-    const bLatest = b.timeseries[b.timeseries.length - 1]?.mmr || 0;
-    return bLatest - aLatest;
-  });
+  window.players = filterPlayers(await res.json(), []);
 
   // Clear previous graph if necessary
   d3.select(".rankTrackerGraph").selectAll("*").remove();
 
-  filteredPlayers = filterPlayers(window.players);
+  filteredPlayers = filterPlayers(window.players, filteredNames);
   drawGraph(filteredPlayers); // your graph drawing function using the new data
 }
 
