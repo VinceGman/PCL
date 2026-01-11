@@ -263,8 +263,12 @@ showLast10Toggle.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
+const showLast100LP = document.querySelector("#showLast100LP");
+showLast100LP.addEventListener("change", (e) => {
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
 function filterPlayers(players, names, options) {
-  console.log(options?.firstSort);
   players = players.map((p) => ({
     ...p,
     timeseries: p.timeseries.map((d) => ({ ...d })),
@@ -286,6 +290,23 @@ function filterPlayers(players, names, options) {
     const showLast10Toggle = document.querySelector("#showLast10");
     if (showLast10Toggle.checked && !options?.firstSort) {
       player.timeseries = player.timeseries.slice(-player.lastXGames);
+      player.timeseries.forEach((d, i) => (d.game = i + 1));
+    }
+
+    const showLast100LP = document.querySelector("#showLast100LP");
+    if (showLast100LP.checked && !options?.firstSort) {
+      const ts = player.timeseries;
+      const lastMMR = ts[ts.length - 1].mmr;
+
+      let cutoffIndex = 0;
+      for (let i = ts.length - 1; i >= 0; i--) {
+        if (lastMMR - ts[i].mmr >= 95) {
+          cutoffIndex = i;
+          break;
+        }
+      }
+
+      player.timeseries = ts.slice(cutoffIndex);
       player.timeseries.forEach((d, i) => (d.game = i + 1));
     }
 

@@ -110,8 +110,17 @@ html, body {
   top: 90vh;
   right: 26.05vw;
   height: 3vh;
-  width: 6vw;
+  width: 14vw;
   z-index: 10;
   background: #fff;
   border: 1px solid black;
+}
+
+.graphButtonLabels {
+  margin-right: 0.5vw;
+  font-size: max(1.33vh, 0.75vw);
+}
+
+.graphCheckbox {
+  margin-left: 0.5vw;
 }
