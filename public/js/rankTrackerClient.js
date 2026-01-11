@@ -1,6 +1,5 @@
 let filteredNames = [];
-let filteredPlayers = [];
-window.players = filterPlayers(window.players, []);
+window.players = filterPlayers([...window.players], [], { firstSort: true });
 
 const tooltip = d3
   .select("body")
@@ -28,11 +27,6 @@ function drawGraph(players) {
   const colorScale = d3
     .scaleOrdinal(d3.schemeTableau10) // https://d3js.org/d3-scale-chromatic/categorical
     .domain(window.players.map((p) => p.name));
-
-  const circleScale = d3
-    .scaleLinear()
-    .domain(d3.extent(allData, (d) => d.mmr))
-    .range([4, 10]);
 
   const valueline = d3
     .line()
@@ -256,19 +250,30 @@ playerList.addEventListener("click", (e) => {
     filteredNames.push(player.name);
   }
 
-  filteredPlayers = filterPlayers(window.players, filteredNames);
-  drawGraph(filteredPlayers);
+  drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
 // Redraw graph on window resize
 window.addEventListener("resize", () =>
-  drawGraph(filterPlayers(window.players, filteredNames))
+  drawGraph(filterPlayers([...window.players], filteredNames))
 );
 
-function filterPlayers(players, names) {
+const showLast10Toggle = document.querySelector("#showLast10");
+showLast10Toggle.addEventListener("change", (e) => {
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
+function filterPlayers(players, names, options) {
+  console.log(options?.firstSort);
+  players = players.map((p) => ({
+    ...p,
+    timeseries: p.timeseries.map((d) => ({ ...d })),
+  }));
+
   if (names.length > 0) {
     players = players.filter((p) => names.includes(p.name));
   }
+
   players.forEach((player) => {
     player.timeseries.sort((a, b) => a.game - b.game);
 
@@ -278,12 +283,16 @@ function filterPlayers(players, names) {
 
     player.lastXGames = Math.min(player.timeseries.length - 1, 10);
 
+    const showLast10Toggle = document.querySelector("#showLast10");
+    if (showLast10Toggle.checked && !options?.firstSort) {
+      player.timeseries = player.timeseries.slice(-player.lastXGames);
+      player.timeseries.forEach((d, i) => (d.game = i + 1));
+    }
+
     player.lpChangeLastXGames =
       (player.timeseries[player.timeseries.length - 1]?.mmr || 0) -
       (player.timeseries[player.timeseries.length - 1 - player.lastXGames]
         ?.mmr || 0);
-
-    // player.timeseries.forEach((d, i) => (d.game = i + 1));
   });
 
   const sortedPlayers = [...players].sort((a, b) => {
@@ -297,13 +306,12 @@ function filterPlayers(players, names) {
 
 async function fetchPlayersAndDraw() {
   const res = await fetch("/rankTracker/json");
-  window.players = filterPlayers(await res.json(), []);
+  window.players = filterPlayers(await res.json(), [], { firstSort: true });
 
   // Clear previous graph if necessary
   d3.select(".rankTrackerGraph").selectAll("*").remove();
 
-  filteredPlayers = filterPlayers(window.players, filteredNames);
-  drawGraph(filteredPlayers); // your graph drawing function using the new data
+  drawGraph(filterPlayers([...window.players], filteredNames)); // your graph drawing function using the new data
 }
 
 // Initial draw
