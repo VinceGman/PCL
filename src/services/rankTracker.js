@@ -162,9 +162,35 @@ async function updateRanks() {
           playerData
         );
 
-        await storage.logPush(
-          `${acc.name}: ${lpChange >= 0 ? "+" : ""}${lpChange}`
-        );
+        const tierNames = ["I", "B", "S", "G", "P", "E", "D", "M", "GM", "CH"];
+        const rankNames = ["4", "3", "2", "1"];
+
+        // Compute old tier/rank
+        let oldTierIndex = Math.floor((lastMMR ?? 0) / 400);
+        let oldRankIndex = Math.floor(((lastMMR ?? 0) % 400) / 100);
+
+        // Compute new tier/rank
+        let newTierIndex = Math.floor(mmr / 400);
+        let newRankIndex = Math.floor((mmr % 400) / 100);
+
+        let note = "";
+        if (lastMMR != null) {
+          if (
+            newTierIndex > oldTierIndex ||
+            (newTierIndex === oldTierIndex && newRankIndex > oldRankIndex)
+          ) {
+            note = `Promoted ${tierNames[newTierIndex]}${rankNames[newRankIndex]}`;
+          } else if (
+            newTierIndex < oldTierIndex ||
+            (newTierIndex === oldTierIndex && newRankIndex < oldRankIndex)
+          ) {
+            note = `Demoted ${tierNames[newTierIndex]}${rankNames[newRankIndex]}`;
+          } else {
+            note = `${lpChange >= 0 ? "+" : ""}${lpChange}`;
+          }
+        }
+
+        await storage.logPush(`${acc.name}: ${note}`);
 
         if (current_calls > allowed_calls) continue;
 
