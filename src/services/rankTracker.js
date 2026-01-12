@@ -187,10 +187,10 @@ async function updateRanks() {
           ) {
             note = `Demoted ${tierNames[newTierIndex]}${rankNames[newRankIndex]}`;
           } else {
-            note = `${lpChange > 0 ? "+" : lpChange == 0 ? "-" : ""}${lpChange}`;
+            note = `${lpChange > 0 ? "+" : lpChange == 0 ? "-" : ""}${lpChange}LP`;
           }
         } else {
-          note = `Enters ${tierNames[newTierIndex]}${rankNames[newRankIndex]}`;
+          note = `Enters ${tierNames[newTierIndex]}${rankNames[newRankIndex]} ${playerData.lp}LP`;
         }
 
         await storage.logPush(`${acc.name}: ${note}`);
