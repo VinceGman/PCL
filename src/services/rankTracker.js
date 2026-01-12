@@ -88,7 +88,7 @@ async function updateRanks() {
         const games = rankedData.wins + rankedData.losses;
         console.log(playerData.timeseries.length, games);
         if (
-          playerData.timeseries.length >= games ||
+          playerData.timeseries.length + 4 >= games ||
           playerData.timeseries.some((o) => o.game === games)
         )
           continue;
