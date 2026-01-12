@@ -124,3 +124,24 @@ html, body {
 .graphCheckbox {
   margin-left: 0.5vw;
 }
+
+.listButtons {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 90vh;
+  right: 10vw;
+  height: 3vh;
+  width: 16vw;
+  z-index: 10;
+  background: #fff;
+  border: 1px solid black;
+}
+
+.listButton {
+  align-items: center;
+  width: 3vw;
+  height: 2.5vh;
+  margin-right: 0.5vw;
+  margin-left: 0.5vw;
+}

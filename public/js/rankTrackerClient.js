@@ -268,6 +268,53 @@ showLast100LP.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
+const deselectOutliers = document.querySelector("#deselectOutliers");
+deselectOutliers.addEventListener("click", (e) => {
+  const counts = window.players
+    .map((p) => p.timeseries.length)
+    .sort((a, b) => a - b);
+
+  const n = counts.length;
+  const q1 = counts[Math.floor(n * 0.25)];
+  const q3 = counts[Math.floor(n * 0.75)];
+  const iqr = q3 - q1;
+
+  const low = q1 - 1.5 * iqr;
+  const high = q3 + 1.5 * iqr;
+
+  filteredNames = window.players
+    .filter((p) => {
+      const g = p.timeseries.length;
+      return g >= low && g <= high;
+    })
+    .map((p) => p.name);
+
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
+const platRace = document.querySelector("#platRace");
+platRace.addEventListener("click", (e) => {
+  filteredNames = [
+    "Corruption",
+    "ff 15 very fast",
+    "KDA Player Akali",
+    "Penguyen",
+  ];
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
+const allButton = document.querySelector("#selectAll");
+allButton.addEventListener("click", (e) => {
+  filteredNames = window.players.map((p) => p.name);
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", (e) => {
+  filteredNames = [];
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
 function filterPlayers(players, names, options) {
   players = players.map((p) => ({
     ...p,
