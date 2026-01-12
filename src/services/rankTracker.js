@@ -2,7 +2,10 @@ const storage = require("../libraries/storage");
 const cron = require("node-cron");
 const axios = require("axios");
 
+const allowed_calls = 100;
+
 let service_locked = false;
+let current_calls = 0;
 
 // beginning of season timestamp in seconds: 1767902400
 
@@ -47,6 +50,7 @@ async function updateRanks() {
   }
   console.log("SERVICE: LOCKED");
   service_locked = true;
+  current_calls = 0;
 
   try {
     const service = await storage.pull(`services:rankTracker`);
@@ -58,6 +62,7 @@ async function updateRanks() {
         await new Promise((r) => setTimeout(r, delay));
         const rank_url = `https://na1.api.riotgames.com/lol/league/v4/entries/by-puuid/${acc.puuid}?api_key=${process.env.RIOT_KEY}`;
         console.log(`PULLING: ${acc.name}`);
+        current_calls += 1;
         const rank_res = await axios.get(rank_url);
         const rankedData = rank_res.data.filter(
           (data) => data.queueType == "RANKED_SOLO_5x5"
@@ -140,6 +145,9 @@ async function updateRanks() {
             mmr += 0;
         }
 
+        const lastMMR = playerData?.timeseries?.at(-1)?.mmr;
+        const lpChange = lastMMR != null ? mmr - lastMMR : 0;
+
         playerData.mmr = mmr;
         playerData.wins = rankedData.wins;
         playerData.losses = rankedData.losses;
@@ -154,9 +162,16 @@ async function updateRanks() {
           playerData
         );
 
+        await storage.logPush(
+          `${acc.name}: ${lpChange >= 0 ? "+" : ""}${lpChange}`
+        );
+
+        if (current_calls > allowed_calls) continue;
+
         await new Promise((r) => setTimeout(r, delay));
         const gameID_url = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${acc.puuid}/ids?queue=420&type=ranked&count=1&api_key=${process.env.RIOT_KEY}`;
         console.log(`PULLING LATEST MATCH: ${acc.name}`);
+        current_calls += 1;
         const gameID_res = await axios.get(gameID_url);
         const gameID = gameID_res.data?.[0];
         if (!gameID) continue;
@@ -176,5 +191,6 @@ async function updateRanks() {
   } finally {
     console.log("SERVICE: UNLOCKED");
     service_locked = false;
+    current_calls = 0;
   }
 }
