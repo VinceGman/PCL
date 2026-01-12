@@ -107,6 +107,7 @@ html, body {
   position: absolute;
   display: flex;
   align-items: center;
+  justify-content: center;
   top: 90vh;
   right: 26.05vw;
   height: 3vh;
