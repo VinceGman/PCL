@@ -236,6 +236,11 @@ function drawGraph(players) {
 
   const logList = document.querySelector(".log");
   logList.innerHTML = window.logs.data
+    .filter((l) =>
+      filteredNames.length > 0
+        ? filteredNames.includes(l.text.split(":")?.[0])
+        : true
+    )
     .map((log) => {
       return `<div class="logItem">${log.text}</div>`;
     })
