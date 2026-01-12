@@ -268,6 +268,11 @@ showLast100LP.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
+const showLast3Losses = document.querySelector("#showLast3Losses");
+showLast3Losses.addEventListener("change", (e) => {
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
 const deselectOutliers = document.querySelector("#deselectOutliers");
 deselectOutliers.addEventListener("click", (e) => {
   let players = window.players.map((p) => ({
@@ -357,6 +362,27 @@ function filterPlayers(players, names, options) {
         if (lastMMR - ts[i].mmr >= 95) {
           cutoffIndex = i;
           break;
+        }
+      }
+
+      player.timeseries = ts.slice(cutoffIndex);
+      player.timeseries.forEach((d, i) => (d.game = i + 1));
+    }
+
+    const showLast3Losses = document.querySelector("#showLast3Losses");
+    if (showLast3Losses.checked && !options?.firstSort) {
+      const ts = player.timeseries;
+
+      let losses = 0;
+      let cutoffIndex = 0;
+
+      for (let i = ts.length - 1; i > 0; i--) {
+        if (ts[i].mmr < ts[i - 1].mmr) {
+          losses++;
+          if (losses === 3) {
+            cutoffIndex = Math.max(0, i - 1);
+            break;
+          }
         }
       }
 
