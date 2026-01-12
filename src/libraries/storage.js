@@ -41,12 +41,12 @@ module.exports = {
     async logPush(newLog) {
         let log = await this.logPull();
 
-        log.data.push({
+        log.data.unshift({
             timestamp: Math.floor(Date.now() / 1000),
             text: newLog
         });
 
-        log.data = log.data.slice(-200);
+        log.data = log.data.slice(-300);
 
         await redis.set('services:rankTracker:log', log);
     }
