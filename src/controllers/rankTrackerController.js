@@ -12,6 +12,11 @@ class RankTrackerController {
     const players = await rankTrackerModel.getPlayers();
     res.json(players); // send JSON instead of rendering EJS
   }
+
+  async getLogsJSON(req, res) {
+    const logs = await rankTrackerModel.getLogs();
+    res.json(logs);
+  }
 }
 
 module.exports = new RankTrackerController();

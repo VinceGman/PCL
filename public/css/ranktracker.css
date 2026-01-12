@@ -146,3 +146,24 @@ html, body {
   margin-right: 0.5vw;
   margin-left: 0.5vw;
 }
+
+.log {
+  position: absolute;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  top: 9.90vh;
+  right: 3.90vw;
+  height: 80vh;
+  width: 6vw;
+  z-index: 10;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid black;
+}
+
+.logItem {
+  margin-top: 0.5vh;
+  margin-left: 0.25vw;
+  font-size: 1.5vh;
+}

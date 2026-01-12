@@ -1,5 +1,6 @@
 let filteredNames = [];
 window.players = filterPlayers([...window.players], [], { firstSort: true });
+window.logs = [];
 
 const tooltip = d3
   .select("body")
@@ -232,6 +233,13 @@ function drawGraph(players) {
       `;
     })
     .join("");
+
+  const logList = document.querySelector(".log");
+  logList.innerHTML = window.logs.data
+    .map((log) => {
+      return `<div class="logItem">${log.text}</div>`;
+    })
+    .join("");
 }
 
 const playerList = document.querySelector(".rankTrackerPlayers");
@@ -408,8 +416,13 @@ function filterPlayers(players, names, options) {
 }
 
 async function fetchPlayersAndDraw() {
-  const res = await fetch("/rankTracker/json");
-  window.players = filterPlayers(await res.json(), [], { firstSort: true });
+  const player_res = await fetch("/rankTracker/players");
+  window.players = filterPlayers(await player_res.json(), [], {
+    firstSort: true,
+  });
+
+  const log_res = await fetch("/rankTracker/logs");
+  window.logs = await log_res.json();
 
   // Clear previous graph if necessary
   d3.select(".rankTrackerGraph").selectAll("*").remove();

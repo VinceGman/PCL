@@ -10,7 +10,7 @@ class PlayerModel {
     const accounts = service.accounts;
 
     for (const account of accounts) {
-      const player = await storage.clientPull(
+      const player = await storage.cachePull(
         `services:rankTracker:users:${account.puuid}`
       );
 
@@ -20,6 +20,11 @@ class PlayerModel {
     }
 
     return players;
+  }
+
+  async getLogs() {
+    const logs = await storage.logPull();
+    return logs;
   }
 }
 
