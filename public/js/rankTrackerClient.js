@@ -287,8 +287,10 @@ deselectOutliers.addEventListener("click", (e) => {
   const q3 = counts[Math.floor(n * 0.75)];
   const iqr = q3 - q1;
 
-  const low = q1 - 1.5 * iqr;
-  const high = q3 + 1.5 * iqr;
+  const k_low = 0.5;
+  const k_high = 1.0;
+  const low = q1 - k_low * iqr;
+  const high = q3 + k_high * iqr;
 
   filteredNames = players
     .filter((p) => {
