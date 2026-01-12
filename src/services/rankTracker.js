@@ -86,7 +86,6 @@ async function updateRanks() {
         };
 
         const games = rankedData.wins + rankedData.losses;
-        console.log(playerData.timeseries.length, games);
         if (
           playerData.timeseries.length + 4 >= games ||
           playerData.timeseries.some((o) => o.game === games)
@@ -187,7 +186,9 @@ async function updateRanks() {
           ) {
             note = `Demoted ${tierNames[newTierIndex]}${rankNames[newRankIndex]}`;
           } else {
-            note = `${lpChange > 0 ? "+" : lpChange == 0 ? "-" : ""}${lpChange}LP`;
+            note = `${
+              lpChange > 0 ? "+" : lpChange == 0 ? "-" : ""
+            }${lpChange}LP`;
           }
         } else {
           note = `Enters ${tierNames[newTierIndex]}${rankNames[newRankIndex]} ${playerData.lp}LP`;
