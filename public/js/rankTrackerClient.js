@@ -288,10 +288,12 @@ showLast3Losses.addEventListener("change", (e) => {
 
 const deselectOutliers = document.querySelector("#deselectOutliers");
 deselectOutliers.addEventListener("click", (e) => {
-  let players = window.players.map((p) => ({
-    ...p,
-    timeseries: p.timeseries.map((d) => ({ ...d })),
-  }));
+  let players = window.players
+    .map((p) => ({
+      ...p,
+      timeseries: p.timeseries.map((d) => ({ ...d })),
+    }))
+    .filter((p) => p.timeseries.length > 5);
 
   const counts = players.map((p) => p.timeseries.length).sort((a, b) => a - b);
 
@@ -300,7 +302,7 @@ deselectOutliers.addEventListener("click", (e) => {
   const q3 = counts[Math.floor(n * 0.75)];
   const iqr = q3 - q1;
 
-  const k_low = 0.5;
+  const k_low = 1.0;
   const k_high = 1.0;
   const low = q1 - k_low * iqr;
   const high = q3 + k_high * iqr;
