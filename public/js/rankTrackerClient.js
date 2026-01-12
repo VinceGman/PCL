@@ -270,9 +270,12 @@ showLast100LP.addEventListener("change", (e) => {
 
 const deselectOutliers = document.querySelector("#deselectOutliers");
 deselectOutliers.addEventListener("click", (e) => {
-  const counts = window.players
-    .map((p) => p.timeseries.length)
-    .sort((a, b) => a - b);
+  let players = window.players.map((p) => ({
+    ...p,
+    timeseries: p.timeseries.map((d) => ({ ...d })),
+  }));
+
+  const counts = players.map((p) => p.timeseries.length).sort((a, b) => a - b);
 
   const n = counts.length;
   const q1 = counts[Math.floor(n * 0.25)];
@@ -282,7 +285,7 @@ deselectOutliers.addEventListener("click", (e) => {
   const low = q1 - 1.5 * iqr;
   const high = q3 + 1.5 * iqr;
 
-  filteredNames = window.players
+  filteredNames = players
     .filter((p) => {
       const g = p.timeseries.length;
       return g >= low && g <= high;
@@ -320,6 +323,10 @@ function filterPlayers(players, names, options) {
     ...p,
     timeseries: p.timeseries.map((d) => ({ ...d })),
   }));
+
+  // players.forEach((player) => {
+  //   player.timeseries.forEach((d, i) => (d.game = i + 1));
+  // });
 
   if (names.length > 0) {
     players = players.filter((p) => names.includes(p.name));
