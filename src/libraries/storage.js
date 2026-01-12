@@ -13,7 +13,7 @@ module.exports = {
         await redis.set(address, data, options);
         return data;
     },
-    async clientPull(address, options) {
+    async cachePull(address, options) {
         let data = await redis.get(address, options);
         return data;
     },
@@ -21,5 +21,33 @@ module.exports = {
         // options: { path?: string, ttl?: number }
         await firestore.doc(address.replace(/:/g, '/')).set(data, { merge: true });
         await redis.set(address, data, options);
+    },
+    async logPull() {
+        let log = await redis.get('services:rankTracker:log');
+        if (log) return log;
+
+        log = {
+            data: [
+                {
+                    timestamp: Math.floor(Date.now() / 1000),
+                    text: "Log: Cleared"
+                },
+            ],
+        };
+
+        await redis.set('services:rankTracker:log', log);
+        return log;
+    },
+    async logPush(newLog) {
+        let log = await this.logPull();
+
+        log.data.push({
+            timestamp: Math.floor(Date.now() / 1000),
+            text: newLog
+        });
+
+        log.data = log.data.slice(-200);
+
+        await redis.set('services:rankTracker:log', log);
     }
 }
