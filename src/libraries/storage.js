@@ -46,7 +46,7 @@ module.exports = {
             text: newLog
         });
 
-        log.data = log.data.slice(-300);
+        log.data = log.data.slice(0, 300);
 
         await redis.set('services:rankTracker:log', log);
     }
