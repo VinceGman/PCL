@@ -153,9 +153,9 @@ html, body {
   justify-content: space-between;
   flex-direction: column;
   top: 9.90vh;
-  right: 3.90vw;
+  right: 0.90vw;
   height: 80vh;
-  width: 6vw;
+  width: 9vw;
   z-index: 10;
   overflow: hidden;
   background: #fff;
@@ -164,6 +164,7 @@ html, body {
 
 .logItem {
   margin-top: 0.5vh;
-  margin-left: 0.25vw;
+  margin-left: 0.10vw;
+  margin-right: 0.10vw;
   font-size: 1.5vh;
 }

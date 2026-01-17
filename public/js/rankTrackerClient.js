@@ -78,7 +78,7 @@ function drawGraph(players) {
       .attr("stroke-width", 2)
       .attr(
         "d",
-        valueline.x((d) => xScale(d.game)).y((d) => yScale(d.mmr))
+        valueline.x((d) => xScale(d.game)).y((d) => yScale(d.mmr)),
       );
 
     g.selectAll("circle")
@@ -127,7 +127,7 @@ function drawGraph(players) {
       d3
         .axisBottom(xScale)
         .ticks(xMax - xMin + 1)
-        .tickFormat((d) => (d % step === 0 ? d : ""))
+        .tickFormat((d) => (d % step === 0 ? d : "")),
     );
 
   svg
@@ -209,10 +209,10 @@ function drawGraph(players) {
         <div class="player${
           filteredNames.includes(player.name) ? " selected" : ""
         }" data-puuid="${
-        player.puuid
-      }" style="border-left: 6px solid ${colorScale(
-        player.name
-      )}; padding-left: 8px;">
+          player.puuid
+        }" style="border-left: 6px solid ${colorScale(
+          player.name,
+        )}; padding-left: 8px;">
           <div class="name">${player.name}</div>
           <div class="rank">${
             player.tier.charAt(0).toUpperCase() +
@@ -227,8 +227,8 @@ function drawGraph(players) {
           <div class="lpChangeLastXGames">${
             player.lpChangeLastXGames >= 0 ? "+" : ""
           }${player.lpChangeLastXGames} LP (Last ${
-        player.lastXGames
-      } Games)</div>
+            player.lastXGames
+          } Games)</div>
         </div>
       `;
     })
@@ -239,10 +239,23 @@ function drawGraph(players) {
     .filter((l) =>
       filteredNames.length > 0
         ? filteredNames.includes(l.text.split(":")?.[0])
-        : true
+        : true,
     )
     .map((log) => {
-      return `<div class="logItem">${log.text}</div>`;
+      const time = new Date(log.timestamp * 1000).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+
+      const color =
+        log.text.includes("+") || log.text.includes("Promoted")
+          ? "#90D5FF"
+          : log.text.includes("-") || log.text.includes("Demoted")
+            ? "#FF7F7F"
+            : "#88E788";
+
+      return `<div class="logItem" style="background-color:${color}">[${time}]: ${log.text}</div>`;
     })
     .join("");
 }
@@ -253,7 +266,7 @@ playerList.addEventListener("click", (e) => {
   if (!player_div) return;
 
   const player = window.players.find(
-    (p) => p.puuid == player_div.dataset.puuid
+    (p) => p.puuid == player_div.dataset.puuid,
   );
   if (!player) return;
 
@@ -268,7 +281,7 @@ playerList.addEventListener("click", (e) => {
 
 // Redraw graph on window resize
 window.addEventListener("resize", () =>
-  drawGraph(filterPlayers([...window.players], filteredNames))
+  drawGraph(filterPlayers([...window.players], filteredNames)),
 );
 
 const showLast10Toggle = document.querySelector("#showLast10");
