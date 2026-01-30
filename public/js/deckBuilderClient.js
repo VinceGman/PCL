@@ -23,18 +23,20 @@ function addCard(source, id, maxCount) {
   if (deckCard) {
     if (totalDeckCopies >= deckCard.copies) return; // or >= 1 when source != list
     if (maxCount) {
-      if (source == "list" || card.type == 'Rune') {
+      if (source == "list" || card.type == "Rune") {
         countToAdd = deckCard.copies - totalDeckCopies;
       } else {
         if (deckCard.deckCopies >= 1) return;
       }
     }
   } else if (maxCount) {
-    if (source == "list" || card.type == 'Rune') {
+    if (source == "list" || card.type == "Rune") {
       countToAdd = card.copies - totalDeckCopies;
     } else {
       if (totalDeckCopies >= card.copies) return;
     }
+  } else {
+    if (totalDeckCopies >= card.copies) return;
   }
 
   if (!deckCard) {
@@ -81,8 +83,10 @@ function removeCard(source, id, maxCount) {
   const card = deck.find((card) => card.id == id && card.source == source);
   if (!card) return;
 
+  let removed = false;
   if (card.deckCopies <= 1 || maxCount) {
     deck.splice(index, 1);
+    removed = true;
   } else {
     card.deckCopies -= 1;
   }
@@ -101,10 +105,12 @@ function removeCard(source, id, maxCount) {
   flashCardAnimation(`[data-id="${String(id)}"]`);
   flashCardAnimation(`.decklistCard[data-id="${id}"]`);
 
-  if (card.related != "") {
+  if (removed && card.related != "") {
     const relatedCards = card.related.split("/");
     for (let relatedCard of relatedCards) {
-      removeCard("extra", relatedCard, true);
+      if (deck.filter((c) => c.related.includes(relatedCard)).length == 0) {
+        removeCard("extra", relatedCard, true);
+      }
     }
   }
 }
