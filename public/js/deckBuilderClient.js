@@ -23,14 +23,14 @@ function addCard(source, id, maxCount) {
   if (deckCard) {
     if (totalDeckCopies >= deckCard.copies) return; // or >= 1 when source != list
     if (maxCount) {
-      if (source == "list") {
+      if (source == "list" || card.type == 'Rune') {
         countToAdd = deckCard.copies - totalDeckCopies;
       } else {
         if (deckCard.deckCopies >= 1) return;
       }
     }
   } else if (maxCount) {
-    if (source == "list") {
+    if (source == "list" || card.type == 'Rune') {
       countToAdd = card.copies - totalDeckCopies;
     } else {
       if (totalDeckCopies >= card.copies) return;
