@@ -10,43 +10,43 @@ body {
 #content {
     display: flex;
     flex-wrap: wrap;
-    width: 1728px; /* 90vw on w : 19.2 per vw*/
-    max-width: 1728px;
-    min-width: 1728px;
-    height: 925px; /* 98vw on h : 9.47 per vh*/
-    max-height: 925px;
-    min-height: 925px;
+    width: 90vw; /* 90vw on w : 19.2 per vw*/
+    max-width: 90vw;
+    min-width: 90vw;
+    height: 98vh; /* 98vh on h : 9.44 per vh*/ 
+    max-height: 98vh;
+    min-height: 98vh;
     overflow-y: hidden;
 }
 
 /* Upper panels */
 #deck-filter-panel {
-    width: 1497.6px;
-    height: 153.6px;
-    min-width: 192px;
-    min-height: 153.6px;
-    border: 1px solid black;
+    width: 78vw;
+    height: 16.27vh;
+    min-width: 10vw;
+    min-height: 16.27vh;
+    border: 0.0625rem solid black;
     box-sizing: border-box;
-    padding: 19.2px;
+    padding: 1.2rem;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
 #deck-panel {
-    width: 192px;
-    height: 153.6px;
-    min-width: 192px;
-    min-height: 153.6px;
-    border: 1px solid black;
+    width: 10vw;
+    height: 16.27vh;
+    min-width: 10vw;
+    min-height: 16.27vh;
+    border: 0.0625rem solid black;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 5.76px;
-    font-size: 21.12px;
+    gap: 0.36rem;
+    font-size: 1.32rem;
 }
 
 #card-list-panel .card {
@@ -55,37 +55,79 @@ body {
 
 /* Lower panels */
 #card-list-panel {
-    width: 1497.6px;
-    height: 768px;
-    min-width: 192px;
-    min-height: 192px;
+    width: 78vw;
+    height: 81.36vh;
+    min-width: 10vw;
+    min-height: 20.34vh;
     overflow-y: auto;
-    max-height: 768px;
-    border: 1px solid black;
+    max-height: 81.36vh;
+    border: 0.0625rem solid black;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
-    padding: 52.8px;
-    gap: 20px;
-    row-gap: 60px;
+    padding: 3.3rem;
+    gap: 1.24rem;
+    row-gap: 6.36vh;
     scrollbar-width: none;
 }
 
 #deck-list-and-code-panel {
-    width: 192px;
-    height: 768px;
-    min-width: 192px;
-    min-height: 192px;
-    max-height: 768px;
-    border: 1px solid black;
+    width: 10vw;
+    height: 81.36vh;
+    min-width: 10vw;
+    min-height: 20.34vh;
+    max-height: 81.36vh;
+    border: 0.0625rem solid black;
     box-sizing: border-box;
 }
 
+#deck-commander-panel {
+    width: 10vw;
+    height: 2.44vh;
+    min-width: 10vw;
+    min-height: 2.44vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    scrollbar-width: none;
+    border-bottom: 0.0625rem solid black;
+}
+
 #deck-list-panel {
-    width: 192px;
-    height: 681.6px;
-    min-width: 192px;
-    min-height: 153.6px;
+    width: 10vw;
+    height: 55.68vh;
+    min-width: 10vw;
+    min-height: 55.68vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    scrollbar-width: none;
+    border-bottom: 0.0625rem solid black;
+}
+
+#deck-sideboard-panel {
+    width: 10vw;
+    height: 7.1vh;
+    min-width: 10vw;
+    min-height: 7.1vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    scrollbar-width: none;
+    border-bottom: 0.0625rem solid black;
+}
+
+#deck-extra-panel {
+    width: 10vw;
+    height: 7vh;
+    min-width: 10vw;
+    min-height: 7vh;
     box-sizing: border-box;
     overflow-y: auto;
     display: flex;
@@ -95,15 +137,15 @@ body {
 }
 
 #deck-code-panel {
-    width: 190.08px;
-    height: 86.4px;
-    min-width: 190.08px;
-    min-height: 86.4px;
-    border-top: 1px solid #000;
+    width: 9.9vw;
+    height: 9.15vh;
+    min-width: 9.9vw;
+    min-height: 9.15vh;
+    border-top: 0.0625rem solid #000;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 0.25rem;
     justify-content: center;
     align-items: center;
     align-content: flex-start;
@@ -117,9 +159,9 @@ body {
 }
 
 .card {
-    width: 215px;
-    height: 301px;
-    border-radius: 10px;
+    width: 11.2vw;
+    height: 31.89vh;
+    border-radius: 0.625rem;
     position: relative;
     overflow: hidden;
 }
@@ -136,26 +178,26 @@ body {
   flex-wrap: nowrap !important;
   align-items: flex-start !important;
   width: max-content !important;
-  max-width: 691.2px !important;
+  max-width: 36vw !important;
   background: #fff;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 0.0625rem solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.2);
   position: absolute;
   z-index: 1000;
   pointer-events: none;
   user-select: none;
   gap: 1rem;
-  top: 19.2px;
-  left: 19.2px;
+  top: 2.03vh;
+  left: 1vw;
 }
 
 .popUpCard {
   flex-shrink: 0;
-  width: 345.6px;
-  height: 483.84 px;
-  border-radius: 10px;
+  width: 18vw;
+  height: 51.25vh;
+  border-radius: 0.625rem;
   overflow: hidden;
   user-select: none;
   pointer-events: none;
@@ -165,7 +207,7 @@ body {
 .popUpCard img {
   width: 100%;
   height: 100%;
-  max-width: 345.6px;
+  max-width: 18vw;
   object-fit: cover;
   user-select: none;
   pointer-events: none;
@@ -178,9 +220,9 @@ body {
 }
 
 .decklistCard {
-  width: 170.88px;
-  height: 22px;
-  border-radius: 10px;
+  width: 8.9vw;
+  height: 2.33vh;
+  border-radius: 0.625rem;
   position: relative;
   overflow: hidden;
   background-size: 141.6%;
@@ -191,9 +233,9 @@ body {
 }
 
 #rarity {
-  width: 22px;
-  height: 22px;
-  border-radius: 10px;
+  width: 1.15vw;
+  height: 2.33vh;
+  border-radius: 0.625rem;
   position: relative;
   overflow: hidden;
   background-size: 2000%;
@@ -202,25 +244,25 @@ body {
 }
 
 #cardCount {
-    width: 19.2px;
-    height: 19.2px;
+    width: 1vw;
+    height: 2.03vh;
     border-radius: 5%;
     justify-content: center;
     align-items: center;
     text-align: center;
     display: flex;
     box-sizing: border-box;
-    border: 2px solid black;
+    border: 0.125rem solid black;
     background-color: transparent;
     padding-top: 1%;
     margin-top: 1%;
 }
 
 #card-input {
-    border: 2px solid #ccc;
-    border-radius: 5px;
+    border: 0.125rem solid #ccc;
+    border-radius: 0.3125rem;
     width: 100%;
-    max-width: 235px;
+    max-width: 12.24vw;
 }
 
 @keyframes flash {

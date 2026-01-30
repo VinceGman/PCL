@@ -37,7 +37,7 @@ class CardModel {
         }
 
         if (card.type.includes("Rune")) {
-          card.metadata += `<b>Rune</b>: This card type is actually not needed in your deck. Only add this to your deck if you wish to use a different card back than what I provide.<br><br>`;
+          card.metadata += `<b>Rune</b>: Add this to your cards if your deck is using this rune in its identity.<br><br>`;
         }
 
         if (card.type.includes("Token")) {
