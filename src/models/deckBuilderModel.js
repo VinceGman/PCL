@@ -26,6 +26,7 @@ class CardModel {
             card.text.includes("Commander")) &&
           !card.identity.includes("neutral")
         ) {
+          card.info += `Commander`;
           card.metadata += `This may be used as your <b>Commander</b>.<br><br>`;
         }
 
