@@ -4,6 +4,7 @@ let totalRunes = 0;
 let totalTokens = 0;
 let totalDeck = 0;
 let totalSideboard = 0;
+let totalSideboardSlots = 0;
 
 // console.log(cards);
 
@@ -19,6 +20,12 @@ function addCard(source, id, maxCount) {
     .reduce((sum, c) => sum + (c.deckCopies ?? 0), 0);
 
   let countToAdd = 1;
+
+  if (
+    source == "commander" &&
+    (card.rarity != "Legendary" || !card.type.includes("Creature"))
+  )
+    return;
 
   if (deckCard) {
     if (totalDeckCopies >= deckCard.copies) return; // or >= 1 when source != list
@@ -724,7 +731,7 @@ function filterCardListCards() {
             ? `attack: ${card.stats.split("/")[0]}durability: ${card.stats.split("/")[1]}attack:${card.stats.split("/")[0]}durability:${card.stats.split("/")[1]}`
             : card.stats
           : card.stats,
-      card.rarity,
+      `rarity: ${card.rarity}rarity:${card.rarity}`,
       `cost: ${card.cmc}mana: ${card.cmc}cost:${card.cmc}mana:${card.cmc}`,
       card.info,
     ]
@@ -856,12 +863,12 @@ function renderDeckPanel() {
   totalDeckText.innerHTML = `Deck: ${totalDeck}`;
 
   const totalSideboardText = document.getElementById("totalSideboard");
-  if (totalSideboard > 0) {
-    totalSideboardText.innerHTML = `Sideboard: ${totalSideboard}`;
+  if (totalSideboard > 0 || totalSideboardSlots > 0) {
+    totalSideboardText.innerHTML = `Sideboard: ${totalSideboard}/${totalSideboardSlots}`;
   } else {
     totalSideboardText.innerHTML = ``;
   }
-  totalDeckText.innerHTML = `Deck: ${totalDeck}`;
+  totalDeckText.innerHTML = `Deck: ${totalDeck}/40`;
 
   const totalRunesText = document.getElementById("totalRunes");
   if (totalRunes > 0) {
@@ -894,6 +901,11 @@ function updateCardCounts() {
   totalSideboard = deck
     .filter((card) => card.source.toLowerCase() === "sideboard")
     .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalSideboardSlots = deck.reduce((sum, card) => {
+    const match = card.text.match(/sideboard\s*\((\d+)\)/i);
+    return match ? sum + Number(match[1]) : sum;
+  }, 0);
 }
 
 function updateSelection(id) {
