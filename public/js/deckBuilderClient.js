@@ -28,6 +28,9 @@ function addCard(source, id, maxCount) {
       } else {
         if (deckCard.deckCopies >= 1) return;
       }
+    } else {
+      if (source != "list" && card.type != "Rune" && deckCard.deckCopies >= 1)
+        return;
     }
   } else if (maxCount) {
     if (source == "list" || card.type == "Rune") {
@@ -710,12 +713,20 @@ function filterCardListCards() {
       card.name,
       card.cost,
       card.text,
-      card.identity,
-      card.type,
-      card.stats,
+      `identity: ${card.identity.replace(/[{}]/g, " ").trim()}identity:${card.identity.replace(/[{}]/g, " ").trim()}`,
+      `type: ${card.type}type:${card.type}`,
+      card.type.includes("Creature")
+        ? card.stats.split("/").length > 0
+          ? `attack: ${card.stats.split("/")[0]}health: ${card.stats.split("/")[1]}attack:${card.stats.split("/")[0]}health:${card.stats.split("/")[1]}`
+          : card.stats
+        : card.type.includes("Artifact")
+          ? card.stats.split("/").length > 0
+            ? `attack: ${card.stats.split("/")[0]}durability: ${card.stats.split("/")[1]}attack:${card.stats.split("/")[0]}durability:${card.stats.split("/")[1]}`
+            : card.stats
+          : card.stats,
       card.rarity,
-      card.cmc,
-      card.metadata,
+      `cost: ${card.cmc}mana: ${card.cmc}cost:${card.cmc}mana:${card.cmc}`,
+      card.info,
     ]
       .join(" ")
       .toLowerCase();

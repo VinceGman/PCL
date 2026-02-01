@@ -17,6 +17,7 @@ class CardModel {
         fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.jpg`))
       )
       .map((card) => {
+        card.info = card.metadata;
         card.metadata += card.metadata ? "<br><br>" : "";
 
         if (
