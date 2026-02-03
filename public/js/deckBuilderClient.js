@@ -297,13 +297,7 @@ function renderDeckList() {
 
 // DONE
 document.addEventListener("DOMContentLoaded", () => {
-  const filterInput = document.getElementById("filter-input");
-  const filterValue = filterInput.value.toLowerCase();
-  if (filterValue) {
-    filterCardListCards();
-  } else {
-    setCardListCardEvents();
-  }
+  filterCardListCards();
 
   const deckCode = document.getElementById("deckCode").value;
   if (deckCode) {
@@ -737,6 +731,10 @@ function filterCardListCards() {
     ]
       .join(" ")
       .toLowerCase();
+
+    if (card.status == "unaddable") {
+      return false;
+    }
 
     if (musts.length && !musts.every((term) => text.includes(term))) {
       return false;
