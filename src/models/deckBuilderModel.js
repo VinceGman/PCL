@@ -12,9 +12,10 @@ class CardModel {
   async getCards() {
     const keywords = await csv.fetchCSV(process.env.GOOGLE_SHEETS_KEYWORDS_CSV);
 
-    const cards = (await csv.fetchCSV(process.env.GOOGLE_SHEETS_CARDS_CSV))
+    let cards = await csv.fetchCSV(process.env.GOOGLE_SHEETS_CARDS_CSV);
+    cards = cards
       .filter((card) =>
-        fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.jpg`))
+        fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.jpg`)),
       )
       .map((card) => {
         card.info = card.metadata;
@@ -66,10 +67,22 @@ class CardModel {
 
         const text = (card.text || "").toLowerCase();
 
-        const matchedKeywords = keywords
+        let matchedKeywords = keywords
           .filter((kw) => text.includes(kw.keyword.toLowerCase()))
           .map((kw) => `<b>${kw.keyword}</b>: ${kw.description}`)
           .join("<br><br>");
+
+        const relatedNames = card.related
+          ? card.related
+              .split("/")
+              .map((id) => cards.find((c) => c.id == id))
+              .filter(Boolean)
+              .map((c) => c.name)
+          : [];
+
+        matchedKeywords += relatedNames.length
+          ? `<br><br><b>Related Cards</b>: ${relatedNames.join(", ")}`
+          : "";
 
         return {
           ...card,
