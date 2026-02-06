@@ -439,9 +439,6 @@ function filterPlayers(players, names, options) {
 
 async function fetchPlayersAndDraw() {
   const player_res = await fetch("/rankTracker/players");
-  window.players = filterPlayers(await player_res.json(), [], {
-    firstSort: true,
-  });
   window.players = filterPlayers(
     (await player_res.json()).filter((p) => !removeList.includes(p.name)),
     [],
