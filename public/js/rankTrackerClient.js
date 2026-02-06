@@ -1,4 +1,6 @@
 let filteredNames = [];
+let removeList = ["bloom"];
+window.players = window.players.filter((p) => !removeList.includes(p.name));
 window.players = filterPlayers([...window.players], [], { firstSort: true });
 window.logs = [];
 
@@ -440,6 +442,13 @@ async function fetchPlayersAndDraw() {
   window.players = filterPlayers(await player_res.json(), [], {
     firstSort: true,
   });
+  window.players = filterPlayers(
+    (await player_res.json()).filter((p) => !removeList.includes(p.name)),
+    [],
+    {
+      firstSort: true,
+    },
+  );
 
   const log_res = await fetch("/rankTracker/logs");
   window.logs = await log_res.json();
