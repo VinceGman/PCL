@@ -715,7 +715,7 @@ function filterCardListCards() {
       card.cost,
       card.text,
       `identity: ${card.identity.replace(/[{}]/g, " ").trim()}identity:${card.identity.replace(/[{}]/g, " ").trim()}`,
-      `type: ${card.type}type:${card.type}`,
+      `${card.type.split(" ").map(e => `type: ${e}`).join("")}${card.type.split(" ").map(e => `type:${e}`).join("")}`,
       card.type.includes("Creature")
         ? card.stats.split("/").length > 0
           ? `attack: ${card.stats.split("/")[0]}health: ${card.stats.split("/")[1]}attack:${card.stats.split("/")[0]}health:${card.stats.split("/")[1]}`
