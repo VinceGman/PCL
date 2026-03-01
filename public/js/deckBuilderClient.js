@@ -12,7 +12,7 @@ let totalSideboardSlots = 0;
 function addCard(source, id, maxCount) {
   const card = cards.find((c) => c.id == id);
   if (!card) return;
-  if (card.type === "Rune" || card.type === "Token") source = "extra";
+  if (card.type === "Rune" || card.type.includes("Token")) source = "extra";
 
   const deckCard = deck.find((c) => c.id == id && c.source == source);
   const totalDeckCopies = deck
@@ -889,7 +889,7 @@ function updateCardCounts() {
     .reduce((sum, card) => sum + card.deckCopies, 0);
 
   totalTokens = deck
-    .filter((card) => card.type.toLowerCase() === "token")
+    .filter((card) => card.type.toLowerCase().includes("token"))
     .reduce((sum, card) => sum + card.deckCopies, 0);
 
   totalDeck = deck
