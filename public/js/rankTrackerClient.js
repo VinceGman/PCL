@@ -334,11 +334,18 @@ deselectOutliers.addEventListener("click", (e) => {
 
 const platRace = document.querySelector("#platRace");
 platRace.addEventListener("click", (e) => {
+  // filteredNames = [
+  //   "Corruption",
+  //   "ff 15 very fast",
+  //   "KDA Player Akali",
+  //   "Penguyen",
+  // ];
   filteredNames = [
-    "Corruption",
-    "ff 15 very fast",
-    "KDA Player Akali",
-    "Penguyen",
+    "Sore Emperor",
+    "Himejoshi",
+    "TheAutumnbot",
+    "dog mental",
+    "iNguyen",
   ];
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
