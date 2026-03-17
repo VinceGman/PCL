@@ -1,8 +1,5 @@
 let filteredNames = [];
 let removeList = ["bloom"];
-window.players = window.players.filter((p) => !removeList.includes(p.name));
-window.players = filterPlayers([...window.players], [], { firstSort: true });
-window.logs = [];
 
 const tooltip = d3
   .select("body")
@@ -250,6 +247,10 @@ function drawGraph(players) {
         hour12: false,
       });
 
+      // log.array = log.text.split(":");
+      // log.name = log.array?.[0]?.trim();
+      // log.logText = log.array?.[1]?.trim();
+
       const color =
         log.text.includes("+") || log.text.includes("Promoted")
           ? "#90D5FF"
@@ -258,6 +259,10 @@ function drawGraph(players) {
             : "#88E788";
 
       return `<div class="logItem" style="background-color:${color}">[${time}]: ${log.text}</div>`;
+      // return `<div class="logItem">
+      //   <div class="logTimeName" style="background-color:${colorScale(log.name)}">[${time}]: ${log.name}: </div>
+      //   <div class="logText" style="background-color:${color}">${log.logText}</div>
+      // </div>`;
     })
     .join("");
 }
@@ -286,6 +291,11 @@ window.addEventListener("resize", () =>
   drawGraph(filterPlayers([...window.players], filteredNames)),
 );
 
+const showRecent = document.querySelector("#showRecent");
+showRecent.addEventListener("change", (e) => {
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
 const showLast10Toggle = document.querySelector("#showLast10");
 showLast10Toggle.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
@@ -298,6 +308,11 @@ showLast100LP.addEventListener("change", (e) => {
 
 const showLast3Losses = document.querySelector("#showLast3Losses");
 showLast3Losses.addEventListener("change", (e) => {
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
+const showRelative = document.querySelector("#showRelative");
+showRelative.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
@@ -368,14 +383,12 @@ function filterPlayers(players, names, options) {
     timeseries: p.timeseries.map((d) => ({ ...d })),
   }));
 
-  // players.forEach((player) => {
-  //   player.timeseries.forEach((d, i) => (d.game = i + 1));
-  // });
-
   if (names.length > 0) {
     players = players.filter((p) => names.includes(p.name));
   }
 
+  const recentGamesCount = 200;
+  const recentGamesLog = window.logs.data.slice(0, recentGamesCount);
   players.forEach((player) => {
     player.timeseries.sort((a, b) => a.game - b.game);
 
@@ -385,10 +398,19 @@ function filterPlayers(players, names, options) {
 
     player.lastXGames = Math.min(player.timeseries.length - 1, 10);
 
+    const showRecent = document.querySelector("#showRecent");
+    if (showRecent.checked && !options?.firstSort) {
+      const playerRecentGames = recentGamesLog.filter((obj) =>
+        obj.text.toLowerCase().includes(player.name.toLowerCase()),
+      ).length;
+      player.timeseries = player.timeseries.slice(
+        player.timeseries.length - playerRecentGames,
+      );
+    }
+
     const showLast10Toggle = document.querySelector("#showLast10");
     if (showLast10Toggle.checked && !options?.firstSort) {
       player.timeseries = player.timeseries.slice(-player.lastXGames);
-      player.timeseries.forEach((d, i) => (d.game = i + 1));
     }
 
     const showLast100LP = document.querySelector("#showLast100LP");
@@ -405,7 +427,6 @@ function filterPlayers(players, names, options) {
       }
 
       player.timeseries = ts.slice(cutoffIndex);
-      player.timeseries.forEach((d, i) => (d.game = i + 1));
     }
 
     const showLast3Losses = document.querySelector("#showLast3Losses");
@@ -426,13 +447,17 @@ function filterPlayers(players, names, options) {
       }
 
       player.timeseries = ts.slice(cutoffIndex);
-      player.timeseries.forEach((d, i) => (d.game = i + 1));
     }
 
     player.lpChangeLastXGames =
       (player.timeseries[player.timeseries.length - 1]?.mmr || 0) -
       (player.timeseries[player.timeseries.length - 1 - player.lastXGames]
         ?.mmr || 0);
+
+    const showRelative = document.querySelector("#showRelative");
+    if (showRelative.checked && !options?.firstSort) {
+      player.timeseries.forEach((d, i) => (d.game = i + 1));
+    }
   });
 
   const sortedPlayers = [...players].sort((a, b) => {
@@ -445,6 +470,9 @@ function filterPlayers(players, names, options) {
 }
 
 async function fetchPlayersAndDraw() {
+  const log_res = await fetch("/rankTracker/logs");
+  window.logs = await log_res.json();
+
   const player_res = await fetch("/rankTracker/players");
   window.players = filterPlayers(
     (await player_res.json()).filter((p) => !removeList.includes(p.name)),
@@ -454,13 +482,10 @@ async function fetchPlayersAndDraw() {
     },
   );
 
-  const log_res = await fetch("/rankTracker/logs");
-  window.logs = await log_res.json();
-
-  // Clear previous graph if necessary
+  // Clear previous graph
   d3.select(".rankTrackerGraph").selectAll("*").remove();
 
-  drawGraph(filterPlayers([...window.players], filteredNames)); // your graph drawing function using the new data
+  drawGraph(filterPlayers([...window.players], filteredNames));
 }
 
 // Initial draw
