@@ -34,6 +34,7 @@ function drawGraph(players) {
     .y((d) => d.mmr);
 
   const lines = [
+    { value: 2800, color: "purple" },
     { value: 2400, color: "purple" },
     { value: 2000, color: "green" },
     { value: 1600, color: "blue" },
