@@ -116,13 +116,13 @@ async function updateRanks() {
             mmr += 2400;
             break;
           case "MASTER":
-            mmr += 2800;
+            mmr += 2500;
             break;
           case "GRANDMASTER":
-            mmr += 3200;
+            mmr += 2900;
             break;
           case "CHALLENGER":
-            mmr += 3600;
+            mmr += 3300;
             break;
           default:
             mmr += 0;
