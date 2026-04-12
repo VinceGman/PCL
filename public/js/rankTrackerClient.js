@@ -360,7 +360,7 @@ platRace.addEventListener("click", (e) => {
     "Sore Emperor",
     "Himejoshi",
     "TheAutumnbot",
-    "dog mental",
+    "Hydrione",
     "iNguyen",
   ];
   drawGraph(filterPlayers([...window.players], filteredNames));
