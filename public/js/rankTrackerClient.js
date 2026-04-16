@@ -297,8 +297,8 @@ showRecent.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
-const showLast10Toggle = document.querySelector("#showLast10");
-showLast10Toggle.addEventListener("change", (e) => {
+const showLast50Toggle = document.querySelector("#showLast50");
+showLast50Toggle.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
@@ -397,7 +397,7 @@ function filterPlayers(players, names, options) {
     const last = player.timeseries[player.timeseries.length - 1]?.mmr || 0;
     player.totalLPChange = last - first;
 
-    player.lastXGames = Math.min(player.timeseries.length - 1, 10);
+    player.lastXGames = Math.min(player.timeseries.length - 1, 50);
 
     const showRecent = document.querySelector("#showRecent");
     if (showRecent.checked && !options?.firstSort) {
@@ -409,8 +409,8 @@ function filterPlayers(players, names, options) {
       );
     }
 
-    const showLast10Toggle = document.querySelector("#showLast10");
-    if (showLast10Toggle.checked && !options?.firstSort) {
+    const showLast50Toggle = document.querySelector("#showLast50");
+    if (showLast50Toggle.checked && !options?.firstSort) {
       player.timeseries = player.timeseries.slice(-player.lastXGames);
     }
 
