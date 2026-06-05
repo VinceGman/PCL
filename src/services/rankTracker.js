@@ -11,19 +11,20 @@ let current_calls = 0;
 
 // (async () => {
 //   const lostpuuid =
-//     "FYvHFsiAngBO2k0gYJRRq35R8FljFCZvoeICszRdUg7QZ6UFpzskFOR8OqvsGP5lr-Hk1xDEpL4coQ";
+//     "bgYQggIxUXi6zgmL9b62rky1Sw9TfagDdPE-FTwt0FTb3b6I0t8PemfTnXbm7WTO4ngmTzyh1UJ6LQ";
 //   const lostUser = await storage.pull(
-//     `services:rankTracker:users:${lostpuuid}`
+//     `services:rankTracker:users:${lostpuuid}`,
 //   );
 
-//   const lpgains = [0, -10, -10, -10]; // has to start with a 0
-//   const startingLP = 1455;
+//   const lpgains = [0, -10, -10, -10, 30, -10, 31, -1, 30, -10, 30, 30, 30]; // has to start with a 0
+//   // 1680
+//   const startingLP = 1180;
 //   let cummulative = 0;
 //   lostUser.timeseries = [];
 //   for (let i = 0; i < lpgains.length; i++) {
 //     cummulative += lpgains[i];
 //     lostUser.timeseries.push({
-//       game: i + 5,
+//       game: i + 3,
 //       mmr: startingLP + cummulative,
 //     });
 //   }
@@ -65,12 +66,12 @@ async function updateRanks() {
         current_calls += 1;
         const rank_res = await axios.get(rank_url);
         const rankedData = rank_res.data.filter(
-          (data) => data.queueType == "RANKED_SOLO_5x5"
+          (data) => data.queueType == "RANKED_SOLO_5x5",
         )?.[0];
         if (!rankedData) continue;
 
         const playerData = (await storage.pull(
-          `services:rankTracker:users:${acc.puuid}`
+          `services:rankTracker:users:${acc.puuid}`,
         )) ?? {
           name: acc.name,
           puuid: acc.puuid,
@@ -159,7 +160,7 @@ async function updateRanks() {
 
         await storage.push(
           `services:rankTracker:users:${acc.puuid}`,
-          playerData
+          playerData,
         );
 
         const tierNames = ["I", "B", "S", "G", "P", "E", "D", "M", "GM", "CH"];
