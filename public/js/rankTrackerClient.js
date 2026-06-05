@@ -348,8 +348,8 @@ deselectOutliers.addEventListener("click", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
-const platRace = document.querySelector("#platRace");
-platRace.addEventListener("click", (e) => {
+const compPlayers = document.querySelector("#compPlayers");
+compPlayers.addEventListener("click", (e) => {
   // filteredNames = [
   //   "Corruption",
   //   "ff 15 very fast",
@@ -362,6 +362,7 @@ platRace.addEventListener("click", (e) => {
     "TheAutumnbot",
     "Hydrione",
     "iNguyen",
+    "debodon"
   ];
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
