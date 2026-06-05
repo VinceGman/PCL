@@ -18,8 +18,24 @@ function drawGraph(players) {
   const margin = { top: 50, right: 20, bottom: 50, left: 50 };
   const container = document.querySelector(".rankTrackerGraph");
 
+  const graphStartGame =
+    Number(document.querySelector("#gameStart").value) || 1;
+  const graphEndGame =
+    Number(document.querySelector("#gameEnd").value) ||
+    d3.max(
+      players.flatMap((p) => p.timeseries),
+      (d) => d.game,
+    );
+
   // Flatten all timeseries for scales
-  const allData = players.flatMap((p) => p.timeseries);
+  // const allData = players.flatMap((p) => p.timeseries);
+  const visiblePlayers = players.map((p) => ({
+    ...p,
+    timeseries: p.timeseries.filter(
+      (d) => d.game >= graphStartGame && d.game <= graphEndGame,
+    ),
+  }));
+  const allData = visiblePlayers.flatMap((p) => p.timeseries);
   const mmrMax = d3.max(allData, (d) => d.mmr);
   const yMax = Math.ceil(mmrMax / 400) * 400;
   const yMin = d3.min(allData, (d) => d.mmr);
@@ -59,14 +75,19 @@ function drawGraph(players) {
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
   // Scales
+  // const xScale = d3
+  //   .scaleLinear()
+  //   .domain(d3.extent(allData, (d) => d.game))
+  //   .range([0, width]);
+
   const xScale = d3
     .scaleLinear()
-    .domain(d3.extent(allData, (d) => d.game))
+    .domain([graphStartGame, graphEndGame])
     .range([0, width]);
 
   const yScale = d3.scaleLinear().domain([yMin, yMax]).range([height, 0]);
 
-  players.forEach((player) => {
+  visiblePlayers.forEach((player) => {
     const data = player.timeseries;
 
     const g = svg.append("g"); // group for this player
@@ -116,7 +137,9 @@ function drawGraph(players) {
   });
 
   // Axes
-  const [xMin, xMax] = xScale.domain();
+  // const [xMin, xMax] = xScale.domain();
+  const xMin = graphStartGame;
+  const xMax = graphEndGame;
   const step = Math.ceil((xMax - xMin + 1) / 10);
 
   svg
@@ -292,13 +315,23 @@ window.addEventListener("resize", () =>
   drawGraph(filterPlayers([...window.players], filteredNames)),
 );
 
+const gameStartInput = document.querySelector("#gameStart");
+gameStartInput.addEventListener("input", (e) => {
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
+const gameEndInput = document.querySelector("#gameEnd");
+gameEndInput.addEventListener("input", (e) => {
+  drawGraph(filterPlayers([...window.players], filteredNames));
+});
+
 const showRecent = document.querySelector("#showRecent");
 showRecent.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
-const showLast50Toggle = document.querySelector("#showLast50");
-showLast50Toggle.addEventListener("change", (e) => {
+const showLast10Toggle = document.querySelector("#showLast10");
+showLast10Toggle.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
@@ -362,7 +395,7 @@ compPlayers.addEventListener("click", (e) => {
     "TheAutumnbot",
     "Hydrione",
     "iNguyen",
-    "debodon"
+    "debodon",
   ];
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
@@ -398,7 +431,7 @@ function filterPlayers(players, names, options) {
     const last = player.timeseries[player.timeseries.length - 1]?.mmr || 0;
     player.totalLPChange = last - first;
 
-    player.lastXGames = Math.min(player.timeseries.length - 1, 50);
+    player.lastXGames = Math.min(player.timeseries.length - 1, 10);
 
     const showRecent = document.querySelector("#showRecent");
     if (showRecent.checked && !options?.firstSort) {
@@ -410,8 +443,8 @@ function filterPlayers(players, names, options) {
       );
     }
 
-    const showLast50Toggle = document.querySelector("#showLast50");
-    if (showLast50Toggle.checked && !options?.firstSort) {
+    const showLast10Toggle = document.querySelector("#showLast10");
+    if (showLast10Toggle.checked && !options?.firstSort) {
       player.timeseries = player.timeseries.slice(-player.lastXGames);
     }
 

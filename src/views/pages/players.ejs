@@ -15,16 +15,20 @@
   </div>
   </div>
   <div class="graphButtons">
-    <input type="checkbox" id="showRecent" class="graphCheckbox" checked>
+    <label for="gameStart" class="graphButtonLabels">Start</label>
+    <input type="text" id="gameStart" class="graphTextbox" value="1"/>
+    <label for="gameEnd" class="graphButtonLabels">End</label>
+    <input type="text" id="gameEnd" class="graphTextbox" value=""/>
     <label for="showRecent" class="graphButtonLabels">Recent</label>
-    <input type="checkbox" id="showRelative" class="graphCheckbox" checked>
+    <input type="checkbox" id="showRecent" class="graphCheckbox" checked>
     <label for="showRelative" class="graphButtonLabels">Relative</label>
-    <input type="checkbox" id="showLast50" class="graphCheckbox">
-    <label for="showLast50" class="graphButtonLabels">Last 50 Games</label>
-    <input type="checkbox" id="showLast100LP" class="graphCheckbox">
+    <input type="checkbox" id="showRelative" class="graphCheckbox" checked>
+    <label for="showLast10" class="graphButtonLabels">Last 10 Games</label>
+    <input type="checkbox" id="showLast10" class="graphCheckbox">
     <label for="showLast100LP" class="graphButtonLabels">Last 100 LP</label>
-    <input type="checkbox" id="showLast3Losses" class="graphCheckbox">
+    <input type="checkbox" id="showLast100LP" class="graphCheckbox">
     <label for="showLast3Losses" class="graphButtonLabels">Last 3 Losses</label>
+    <input type="checkbox" id="showLast3Losses" class="graphCheckbox">
   </div>
   <div class="listButtons">
     <button type="button" class="listButton" id="deselectOutliers">Inliers</button>
