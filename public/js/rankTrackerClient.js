@@ -396,6 +396,9 @@ compPlayers.addEventListener("click", (e) => {
     "Hydrione",
     "iNguyen",
     "debodon",
+    "Muchai",
+    "JimmyTeePee",
+    "Gumbers"
   ];
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
