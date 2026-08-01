@@ -1,5 +1,5 @@
 let filteredNames = [];
-let removeList = ["bloom"];
+let removeList = ["bloom", "Goldyn"];
 
 const tooltip = d3
   .select("body")
