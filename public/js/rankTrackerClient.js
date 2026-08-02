@@ -126,7 +126,7 @@ function drawGraph(players) {
       .on("mouseover", (event, d) => {
         tooltip
           .style("opacity", 1)
-          .html(`${player.name}<br>game: ${d.game}<br>mmr: ${d.mmr}`);
+          .html(`${player.name}<br>game: ${d.game}<br>rank: ${d.mmr}`);
       })
       .on("mousemove", (event) => {
         tooltip
@@ -178,7 +178,7 @@ function drawGraph(players) {
     .attr("font-family", "sans-serif")
     .attr("font-size", "14px")
     .attr("font-weight", "700")
-    .text("MMR");
+    .text("Rank");
 
   // Title
   svg
@@ -259,10 +259,11 @@ function drawGraph(players) {
 
   const logList = document.querySelector(".log");
   logList.innerHTML = window.logs.data
-    .filter((l) =>
-      filteredNames.length > 0
-        ? filteredNames.includes(l.text.split(":")?.[0])
-        : true,
+    .filter(
+      (l) =>
+        (filteredNames.length > 0
+          ? filteredNames.includes(l.text.split(":")?.[0])
+          : true) && !removeList.includes(l.text.split(":")?.[0]),
     )
     .map((log) => {
       const time = new Date(log.timestamp * 1000).toLocaleTimeString([], {
@@ -398,7 +399,8 @@ compPlayers.addEventListener("click", (e) => {
     "debodon",
     "Muchai",
     "JimmyTeePee",
-    "Gumbers"
+    "Gumbers",
+    "John Snow",
   ];
   drawGraph(filterPlayers([...window.players], filteredNames));
 });

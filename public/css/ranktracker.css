@@ -12,6 +12,23 @@ html, body {
   transform: translateX(-2vw);
   height: 100vh;
 }
+.riotLegalDisclaimer {
+  position: absolute;
+  align-items: center;
+  text-align: center;
+  font-size: 12px;
+  justify-content: space-between;
+  flex-direction: column;
+  top: 96vh;
+  right: 27.5vw;
+  height: 3.5vh;
+  width: 45vw;
+  z-index: 12;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  /*background: #fff;*/
+  /*border: 1px solid black;*/
+}
 
 .rankTrackerInner {
   display: flex;
