@@ -4,11 +4,9 @@ let removeList = [
   "Goldyn",
   "Sirmus",
   "Baja",
-  "Winfree",
-  "KappaOne",
-  "Psylent",
   "sert"
 ];
+
 (async () => {
   window.logs = await getLogs();
   for (const player of window.players) {
