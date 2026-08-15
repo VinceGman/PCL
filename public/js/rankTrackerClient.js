@@ -10,7 +10,7 @@ let removeList = [
 (async () => {
   window.logs = await getLogs();
   for (const player of window.players) {
-    const found = window.logs.data.some((log) =>
+    const found = window.logs.data.slice(0, 100).some((log) =>
       log.text.includes(player.name),
     );
 
