@@ -1,5 +1,26 @@
 let filteredNames = [];
-let removeList = ["bloom", "Goldyn"];
+let removeList = [
+  "bloom",
+  "Goldyn",
+  "Sirmus",
+  "Baja",
+  "Winfree",
+  "KappaOne",
+  "Psylent",
+  "sert"
+];
+(async () => {
+  window.logs = await getLogs();
+  for (const player of window.players) {
+    const found = window.logs.data.some((log) =>
+      log.text.includes(player.name),
+    );
+
+    if (!found && !removeList.includes(player.name)) {
+      removeList.push(player.name);
+    }
+  }
+})();
 
 const tooltip = d3
   .select("body")
@@ -509,9 +530,13 @@ function filterPlayers(players, names, options) {
   return sortedPlayers;
 }
 
-async function fetchPlayersAndDraw() {
+async function getLogs() {
   const log_res = await fetch("/rankTracker/logs");
-  window.logs = await log_res.json();
+  return await log_res.json();
+}
+
+async function fetchPlayersAndDraw() {
+  window.logs = await getLogs();
 
   const player_res = await fetch("/rankTracker/players");
   window.players = filterPlayers(
