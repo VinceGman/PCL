@@ -4,7 +4,8 @@ let removeList = [
   "Goldyn",
   "Sirmus",
   "Baja",
-  "sert"
+  "sert",
+  "JimmyTeePee"
 ];
 
 (async () => {
