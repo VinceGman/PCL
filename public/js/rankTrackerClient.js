@@ -5,7 +5,7 @@ let removeList = ["bloom", "Goldyn", "Sirmus", "Baja", "sert", "JimmyTeePee"];
   window.logs = await getLogs();
   for (const player of window.players) {
     const found = window.logs.data
-      .slice(0, 100)
+      .slice(0, 200)
       .some((log) => log.text.includes(player.name));
 
     if (!found && !removeList.includes(player.name)) {
