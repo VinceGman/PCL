@@ -1,19 +1,12 @@
 let filteredNames = [];
-let removeList = [
-  "bloom",
-  "Goldyn",
-  "Sirmus",
-  "Baja",
-  "sert",
-  "JimmyTeePee"
-];
+let removeList = ["bloom", "Goldyn", "Sirmus", "Baja", "sert", "JimmyTeePee"];
 
 (async () => {
   window.logs = await getLogs();
   for (const player of window.players) {
-    const found = window.logs.data.slice(0, 100).some((log) =>
-      log.text.includes(player.name),
-    );
+    const found = window.logs.data
+      .slice(0, 100)
+      .some((log) => log.text.includes(player.name));
 
     if (!found && !removeList.includes(player.name)) {
       removeList.push(player.name);
@@ -351,8 +344,8 @@ showRecent.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
-const showLast10Toggle = document.querySelector("#showLast10");
-showLast10Toggle.addEventListener("change", (e) => {
+const showLast20Toggle = document.querySelector("#showLast20");
+showLast20Toggle.addEventListener("change", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
@@ -456,7 +449,7 @@ function filterPlayers(players, names, options) {
     const last = player.timeseries[player.timeseries.length - 1]?.mmr || 0;
     player.totalLPChange = last - first;
 
-    player.lastXGames = Math.min(player.timeseries.length - 1, 10);
+    player.lastXGames = Math.min(player.timeseries.length - 1, 20);
 
     const showRecent = document.querySelector("#showRecent");
     if (showRecent.checked && !options?.firstSort) {
@@ -468,8 +461,8 @@ function filterPlayers(players, names, options) {
       );
     }
 
-    const showLast10Toggle = document.querySelector("#showLast10");
-    if (showLast10Toggle.checked && !options?.firstSort) {
+    const showLast20Toggle = document.querySelector("#showLast20");
+    if (showLast20Toggle.checked && !options?.firstSort) {
       player.timeseries = player.timeseries.slice(-player.lastXGames);
     }
 
