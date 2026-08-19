@@ -1,7 +1,7 @@
 let filteredNames = [];
 let removeList = ["bloom", "Goldyn", "Sirmus", "Baja", "sert", "JimmyTeePee"];
 
-(async () => {
+async function updateRemoveList() {
   window.logs = await getLogs();
   for (const player of window.players) {
     const found = window.logs.data
@@ -12,7 +12,8 @@ let removeList = ["bloom", "Goldyn", "Sirmus", "Baja", "sert", "JimmyTeePee"];
       removeList.push(player.name);
     }
   }
-})();
+}
+updateRemoveList();
 
 const tooltip = d3
   .select("body")
@@ -430,6 +431,18 @@ clearButton.addEventListener("click", (e) => {
   drawGraph(filterPlayers([...window.players], filteredNames));
 });
 
+const hideButton = document.querySelector("#hide");
+hideButton.addEventListener("click", (e) => {
+  if (hideButton.textContent === "Hide") {
+    hideButton.textContent = "Unhide";
+    updateRemoveList();
+  } else if (hideButton.textContent === "Unhide") {
+    hideButton.textContent = "Hide";
+    removeList = ["bloom", "Goldyn", "Sirmus", "Baja", "sert", "JimmyTeePee"];
+  }
+  fetchPlayersAndDraw(filteredNames);
+});
+
 function filterPlayers(players, names, options) {
   players = players.map((p) => ({
     ...p,
@@ -527,7 +540,7 @@ async function getLogs() {
   return await log_res.json();
 }
 
-async function fetchPlayersAndDraw() {
+async function fetchPlayersAndDraw(filteredNames) {
   window.logs = await getLogs();
 
   const player_res = await fetch("/rankTracker/players");
@@ -546,7 +559,7 @@ async function fetchPlayersAndDraw() {
 }
 
 // Initial draw
-fetchPlayersAndDraw();
+fetchPlayersAndDraw(filteredNames);
 
 // Refresh every minute
-setInterval(fetchPlayersAndDraw, 60000); // 60,000 ms = 1 minute
+setInterval(() => fetchPlayersAndDraw(filteredNames), 60000); // 60,000 ms = 1 minute
