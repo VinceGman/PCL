@@ -13,6 +13,7 @@ function addCard(source, id, maxCount) {
   const card = cards.find((c) => c.id == id);
   if (!card) return;
   if (card.type === "Rune" || card.type.includes("Token")) source = "extra";
+  if (card.type === "Treasure Artifact") source = "sideboard";
 
   const deckCard = deck.find((c) => c.id == id && c.source == source);
   const totalDeckCopies = deck
@@ -715,7 +716,13 @@ function filterCardListCards() {
       card.cost,
       card.text,
       `identity: ${card.identity.replace(/[{}]/g, " ").trim()}identity:${card.identity.replace(/[{}]/g, " ").trim()}`,
-      `${card.type.split(" ").map(e => `type: ${e}`).join("")}${card.type.split(" ").map(e => `type:${e}`).join("")}`,
+      `${card.type
+        .split(" ")
+        .map((e) => `type: ${e}`)
+        .join("")}${card.type
+        .split(" ")
+        .map((e) => `type:${e}`)
+        .join("")}`,
       card.type.includes("Creature")
         ? card.stats.split("/").length > 0
           ? `attack: ${card.stats.split("/")[0]}health: ${card.stats.split("/")[1]}attack:${card.stats.split("/")[0]}health:${card.stats.split("/")[1]}`
