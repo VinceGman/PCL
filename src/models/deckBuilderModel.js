@@ -13,6 +13,62 @@ class CardModel {
     const keywords = await csv.fetchCSV(process.env.GOOGLE_SHEETS_KEYWORDS_CSV);
 
     let cards = await csv.fetchCSV(process.env.GOOGLE_SHEETS_CARDS_CSV);
+
+    // const runeMap = {
+    //   "{curse}": "c",
+    //   "{shadow}": "s",
+    //   "{celestia}": "w",
+    //   "{avarice}": "a",
+    //   "{mystic}": "y",
+    //   "{frost}": "f",
+    //   "{vitality}": "v",
+    //   "{blight}": "b",
+    //   "{divination}": "d",
+    //   "{empyrean}": "e",
+    //   "{blood}": "o",
+    //   "{malice}": "m",
+    //   "{mythic}": "t",
+    //   "{aspect}": "p",
+    //   "{storm}": "r",
+    //   "{pixie}": "x",
+    //   "{fractal}": "l",
+    //   "{sunder}": "n",
+    //   "{raqia}": "q",
+    //   "{alchemy}": "h",
+    //   "{neutral}": "z",
+    //   "{prismatic}": "u",
+    // };
+
+    // function condenseRunes(str) {
+    //   if (!str) return "";
+    //   return str
+    //     .match(/\{.*?\}/g)
+    //     .map((r) => runeMap[r] || "")
+    //     .join("");
+    // }
+
+    // // Map cards with single-letter keys
+    // const condensedCards = cards.map(
+    //   ({ rarity, type, name, cost, stats, text, identity }) => ({
+    //     r: rarity,
+    //     t: type,
+    //     n: name,
+    //     c: condenseRunes(cost),
+    //     s: stats,
+    //     x: text.replace(/\s+/g, " ").trim(),
+    //     i: condenseRunes(identity),
+    //   }),
+    // );
+
+    // const filePath = path.join(process.cwd(), "cardData.json");
+
+    // fs.writeFile(
+    //   filePath,
+    //   JSON.stringify(condensedCards), // no spaces, minimal JSON
+    //   { flag: "wx" },
+    //   () => {},
+    // );
+
     cards = cards
       .filter((card) =>
         fs.existsSync(path.join(process.cwd(), "Cards", `${card.id}.jpg`)),
@@ -23,6 +79,7 @@ class CardModel {
 
         if (
           ((card.type.includes("Creature") &&
+            !card.type.includes("Titan") &&
             card.rarity.includes("Legendary")) ||
             card.text.includes("Commander")) &&
           !card.identity.includes("neutral")
