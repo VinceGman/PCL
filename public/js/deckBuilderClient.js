@@ -15,6 +15,7 @@ let totalEnchantments = 0;
 let totalQuests = 0;
 let totalArtifacts = 0;
 let totalWeapons = 0;
+let costAvg = 0;
 let cost0 = 0;
 let cost1 = 0;
 let cost2 = 0;
@@ -940,6 +941,9 @@ function renderDeckPanel() {
     totalTokensText.innerHTML = ``;
   }
 
+  const costAvgText = document.getElementById("costAvg");
+  costAvgText.innerHTML = `Avg: ${costAvg}`;
+
   const cost0Text = document.getElementById("cost0");
   cost0Text.innerHTML = `0: ${cost0}`;
 
@@ -1035,7 +1039,9 @@ function updateCardCounts() {
   totalWeapons = deck
     .filter((card) => card.type.toLowerCase().includes("weapon") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
     .reduce((sum, card) => sum + card.deckCopies, 0);
-  
+
+  costAvg = totalDeck > 0 ? (deck.filter(card => card.source === "list").reduce((sum, card) => sum + card.cmc * card.deckCopies, 0) / totalDeck).toFixed(2) : 0;
+    
   cost0 = deck
     .filter((card) => card.cmc === 0 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
     .reduce((sum, card) => sum + card.deckCopies, 0);
