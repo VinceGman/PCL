@@ -195,7 +195,7 @@ body {
 
 #deck-info {
   display: flex !important;
-  flex-direction: row-reverse !important;
+  flex-direction: row !important;
   flex-wrap: wrap !important;
   align-items: flex-start !important;
   width: 28vw !important;

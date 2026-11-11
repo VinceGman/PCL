@@ -897,74 +897,34 @@ function renderDeckPanel() {
   totalDeckText.innerHTML = `Deck: ${totalDeck}/40`;
 
   const totalCreaturesText = document.getElementById("totalCreatures");
-  if (totalCreatures > 0) {
-    totalCreaturesText.innerHTML = `Creatures: ${totalCreatures}`;
-  } else {
-    totalCreaturesText.innerHTML = ``;
-  }
+  totalCreaturesText.innerHTML = `Creatures: ${totalCreatures}`;
 
   const totalDrawText = document.getElementById("totalDraw");
-  if (totalDraw > 0) {
-    totalDrawText.innerHTML = `Draw: ${totalDraw}`;
-  } else {
-    totalDrawText.innerHTML = ``;
-  }
+  totalDrawText.innerHTML = `Draw: ${totalDraw}`;
 
   const totalSpellsText = document.getElementById("totalSpells");
-  if (totalSpells > 0) {
-    totalSpellsText.innerHTML = `Spells: ${totalSpells}`;
-  } else {
-    totalSpellsText.innerHTML = ``;
-  }
+  totalSpellsText.innerHTML = `Spells: ${totalSpells}`;
 
   const totalSorceriesText = document.getElementById("totalSorceries");
-  if (totalSorceries > 0) {
-    totalSorceriesText.innerHTML = `Sorcery: ${totalSorceries}`;
-  } else {
-    totalSorceriesText.innerHTML = ``;
-  }
+  totalSorceriesText.innerHTML = `Sorcery: ${totalSorceries}`;
 
   const totalInstantsText = document.getElementById("totalInstants");
-  if (totalInstants > 0) {
-    totalInstantsText.innerHTML = `Instant: ${totalInstants}`;
-  } else {
-    totalInstantsText.innerHTML = ``;
-  }
+  totalInstantsText.innerHTML = `Instant: ${totalInstants}`;
 
   const totalAurasText = document.getElementById("totalAuras");
-  if (totalAuras > 0) {
-    totalAurasText.innerHTML = `Aura: ${totalAuras}`;
-  } else {
-    totalAurasText.innerHTML = ``;
-  }
+  totalAurasText.innerHTML = `Aura: ${totalAuras}`;
 
   const totalEnchantmentsText = document.getElementById("totalEnchantments");
-  if (totalEnchantments > 0) {
-    totalEnchantmentsText.innerHTML = `Enchantment: ${totalEnchantments}`;
-  } else {
-    totalEnchantmentsText.innerHTML = ``;
-  }
+  totalEnchantmentsText.innerHTML = `Enchantment: ${totalEnchantments}`;
 
   const totalQuestsText = document.getElementById("totalQuests");
-  if (totalQuests > 0) {
-    totalQuestsText.innerHTML = `Quest: ${totalQuests}`;
-  } else {
-    totalQuestsText.innerHTML = ``;
-  }
+  totalQuestsText.innerHTML = `Quest: ${totalQuests}`;
 
   const totalArtifactsText = document.getElementById("totalArtifacts");
-  if (totalArtifacts > 0) {
-    totalArtifactsText.innerHTML = `Artifacts: ${totalArtifacts}`;
-  } else {
-    totalArtifactsText.innerHTML = ``;
-  }
+  totalArtifactsText.innerHTML = `Artifacts: ${totalArtifacts}`;
 
   const totalWeaponsText = document.getElementById("totalWeapons");
-  if (totalWeapons > 0) {
-    totalWeaponsText.innerHTML = `Weapon: ${totalWeapons}`;
-  } else {
-    totalWeaponsText.innerHTML = ``;
-  }
+  totalWeaponsText.innerHTML = `Weapon: ${totalWeapons}`;
 
   const totalRunesText = document.getElementById("totalRunes");
   if (totalRunes > 0) {
