@@ -5,6 +5,27 @@ let totalTokens = 0;
 let totalDeck = 0;
 let totalSideboard = 0;
 let totalSideboardSlots = 0;
+let totalCreatures = 0;
+let totalDraw = 0;
+let totalSpells = 0;
+let totalSorceries = 0;
+let totalInstants = 0;
+let totalAuras = 0;
+let totalEnchantments = 0;
+let totalQuests = 0;
+let totalArtifacts = 0;
+let totalWeapons = 0;
+let cost0 = 0;
+let cost1 = 0;
+let cost2 = 0;
+let cost3 = 0;
+let cost4 = 0;
+let cost5 = 0;
+let cost6 = 0;
+let cost7 = 0;
+let cost8 = 0;
+let cost9 = 0;
+let cost10plus = 0;
 
 // console.log(cards);
 
@@ -875,6 +896,76 @@ function renderDeckPanel() {
   }
   totalDeckText.innerHTML = `Deck: ${totalDeck}/40`;
 
+  const totalCreaturesText = document.getElementById("totalCreatures");
+  if (totalCreatures > 0) {
+    totalCreaturesText.innerHTML = `Creatures: ${totalCreatures}`;
+  } else {
+    totalCreaturesText.innerHTML = ``;
+  }
+
+  const totalDrawText = document.getElementById("totalDraw");
+  if (totalDraw > 0) {
+    totalDrawText.innerHTML = `Draw: ${totalDraw}`;
+  } else {
+    totalDrawText.innerHTML = ``;
+  }
+
+  const totalSpellsText = document.getElementById("totalSpells");
+  if (totalSpells > 0) {
+    totalSpellsText.innerHTML = `Spells: ${totalSpells}`;
+  } else {
+    totalSpellsText.innerHTML = ``;
+  }
+
+  const totalSorceriesText = document.getElementById("totalSorceries");
+  if (totalSorceries > 0) {
+    totalSorceriesText.innerHTML = `Sorcery: ${totalSorceries}`;
+  } else {
+    totalSorceriesText.innerHTML = ``;
+  }
+
+  const totalInstantsText = document.getElementById("totalInstants");
+  if (totalInstants > 0) {
+    totalInstantsText.innerHTML = `Instant: ${totalInstants}`;
+  } else {
+    totalInstantsText.innerHTML = ``;
+  }
+
+  const totalAurasText = document.getElementById("totalAuras");
+  if (totalAuras > 0) {
+    totalAurasText.innerHTML = `Aura: ${totalAuras}`;
+  } else {
+    totalAurasText.innerHTML = ``;
+  }
+
+  const totalEnchantmentsText = document.getElementById("totalEnchantments");
+  if (totalEnchantments > 0) {
+    totalEnchantmentsText.innerHTML = `Enchantment: ${totalEnchantments}`;
+  } else {
+    totalEnchantmentsText.innerHTML = ``;
+  }
+
+  const totalQuestsText = document.getElementById("totalQuests");
+  if (totalQuests > 0) {
+    totalQuestsText.innerHTML = `Quest: ${totalQuests}`;
+  } else {
+    totalQuestsText.innerHTML = ``;
+  }
+
+  const totalArtifactsText = document.getElementById("totalArtifacts");
+  if (totalArtifacts > 0) {
+    totalArtifactsText.innerHTML = `Artifacts: ${totalArtifacts}`;
+  } else {
+    totalArtifactsText.innerHTML = ``;
+  }
+
+  const totalWeaponsText = document.getElementById("totalWeapons");
+  if (totalWeapons > 0) {
+    totalWeaponsText.innerHTML = `Weapon: ${totalWeapons}`;
+  } else {
+    totalWeaponsText.innerHTML = ``;
+  }
+
   const totalRunesText = document.getElementById("totalRunes");
   if (totalRunes > 0) {
     totalRunesText.innerHTML = `Runes: ${totalRunes}`;
@@ -888,6 +979,39 @@ function renderDeckPanel() {
   } else {
     totalTokensText.innerHTML = ``;
   }
+
+  const cost0Text = document.getElementById("cost0");
+  cost0Text.innerHTML = `0: ${cost0}`;
+
+  const cost1Text = document.getElementById("cost1");
+  cost1Text.innerHTML = `1: ${cost1}`;
+
+  const cost2Text = document.getElementById("cost2");
+  cost2Text.innerHTML = `2: ${cost2}`;
+
+  const cost3Text = document.getElementById("cost3");
+  cost3Text.innerHTML = `3: ${cost3}`;
+
+  const cost4Text = document.getElementById("cost4");
+  cost4Text.innerHTML = `4: ${cost4}`;
+
+  const cost5Text = document.getElementById("cost5");
+  cost5Text.innerHTML = `5: ${cost5}`;
+
+  const cost6Text = document.getElementById("cost6");
+  cost6Text.innerHTML = `6: ${cost6}`;
+
+  const cost7Text = document.getElementById("cost7");
+  cost7Text.innerHTML = `7: ${cost7}`;
+
+  const cost8Text = document.getElementById("cost8");
+  cost8Text.innerHTML = `8: ${cost8}`;
+
+  const cost9Text = document.getElementById("cost9");
+  cost9Text.innerHTML = `9: ${cost9}`;
+
+  const cost10plusText = document.getElementById("cost10plus");
+  cost10plusText.innerHTML = `10+: ${cost10plus}`;
 }
 
 function updateCardCounts() {
@@ -911,6 +1035,90 @@ function updateCardCounts() {
     const match = card.text.match(/sideboard\s*\((\d+)\)/i);
     return match ? sum + Number(match[1]) : sum;
   }, 0);
+
+  totalCreatures = deck
+    .filter((card) => card.type.toLowerCase().includes("creature") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalDraw = deck
+    .filter((card) => card.text.toLowerCase().includes("draw") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalSpells = deck
+    .filter((card) => card.type.toLowerCase().includes("spell") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalSorceries = deck
+    .filter((card) => card.type.toLowerCase().includes("sorcery") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalInstants = deck
+    .filter((card) => card.type.toLowerCase().includes("instant") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalAuras = deck
+    .filter((card) => card.type.toLowerCase().includes("aura") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalEnchantments = deck
+    .filter((card) => card.type.toLowerCase().includes("enchantment") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalQuests = deck
+    .filter((card) => card.type.toLowerCase().includes("quest") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalArtifacts = deck
+    .filter((card) => card.type.toLowerCase().includes("artifact") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  totalWeapons = deck
+    .filter((card) => card.type.toLowerCase().includes("weapon") && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+  
+  cost0 = deck
+    .filter((card) => card.cmc === 0 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost1 = deck
+    .filter((card) => card.cmc === 1 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost2 = deck
+    .filter((card) => card.cmc === 2 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost3 = deck
+    .filter((card) => card.cmc === 3 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost4 = deck
+    .filter((card) => card.cmc === 4 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost5 = deck
+    .filter((card) => card.cmc === 5 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost6 = deck
+    .filter((card) => card.cmc === 6 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost7 = deck
+    .filter((card) => card.cmc === 7 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost8 = deck
+    .filter((card) => card.cmc === 8 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost9 = deck
+    .filter((card) => card.cmc === 9 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
+
+  cost10plus = deck
+    .filter((card) => card.cmc >= 10 && !card.source.toLowerCase().includes("sideboard") && !card.source.toLowerCase().includes("extra"))
+    .reduce((sum, card) => sum + card.deckCopies, 0);
 }
 
 function updateSelection(id) {
