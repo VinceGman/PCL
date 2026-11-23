@@ -64,10 +64,18 @@
         </div>
         <div id="card-list-panel"></div>
         <div id="deck-list-and-code-panel">
-            <div id="deck-commander-panel"></div>
-            <div id="deck-list-panel"></div>
-            <div id="deck-sideboard-panel"></div>
-            <div id="deck-extra-panel"></div>
+            <div id="deck-commander-panel">
+                <span>Commander</span>
+            </div>
+            <div id="deck-list-panel">
+                <span>Deck</span>
+            </div>
+            <div id="deck-sideboard-panel">
+                <span>Sideboard</span>
+            </div>
+            <div id="deck-extra-panel">
+                <span>Extra</span>
+            </div>
             <div id="deck-code-panel">
                 <input type="text" id="deckCode" placeholder="Paste Deck Code">
                 <button class="copy-code-btn" type="submit">Copy Code</button>
@@ -77,15 +85,17 @@
             </div>
         </div>
     </div>
-    <div id="card-info" style="background-color: #181a1b; color: #ffffff;"></div>
-    <div id="deck-info" style="background-color: #181a1b; color: #ffffff;">
+    <div id="card-info"></div>
+    <div id="deck-info">
         <div id="totalCreatures">
+        </div>
+        <div id="totalSpells">
+        </div>
+        <div id="totalArtifacts">
         </div>
         <div id="totalDraw">
         </div>
         <div class="line-break"></div>
-        <div id="totalSpells">
-        </div>
         <div id="totalSorceries">
         </div>
         <div id="totalInstants">
@@ -97,12 +107,10 @@
         <div id="totalQuests">
         </div>
         <div class="line-break"></div>
-        <div id="totalArtifacts">
-        </div>
         <div id="totalWeapons">
         </div>
     </div>
-    <div id="cost-info" style="background-color: #181a1b; color: #ffffff;">
+    <div id="cost-info">
         <div id="costAvg">
         </div>
         <div id="cost0">
@@ -127,6 +135,13 @@
         </div>
         <div id="cost10plus">
         </div>
+    </div>
+    <div id="autofill-decks-label">Special Decks</div>
+    <div id="autofill-decks">
+        <button class="autofill-pandoras-deck" type="submit">Pandora's Deck</button>
+    </div>
+    <div id="settings-buttons">
+        <button class="theme-toggle" type="submit">Light Mode</button>
     </div>
 
     <script>

@@ -30,6 +30,8 @@ let cost10plus = 0;
 
 // console.log(cards);
 
+document.body.classList.add("darkmode");
+
 // DONE
 function addCard(source, id, maxCount) {
   const card = cards.find((c) => c.id == id);
@@ -171,6 +173,24 @@ document.querySelector(".enter-code-btn").addEventListener("click", () => {
 });
 
 // DONE
+document.querySelector(".autofill-pandoras-deck").addEventListener("click", () => {
+  deck.length = 0;
+
+  for (const card of cards) {
+    if (card.type == "Sorcery Spell" && card.related == '') {
+      addCard("list", card.id);
+    }
+  }
+});
+
+//
+document.querySelector(".theme-toggle").addEventListener("click", (event) => {
+  event.currentTarget.textContent = "Dark Mode";
+  const isLight = document.body.classList.toggle("lightmode");
+  event.currentTarget.textContent = isLight ? "Dark Mode" : "Light Mode";
+});
+
+// DONE
 document.querySelector(".filter-btn").addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -246,7 +266,7 @@ function renderCardList(filteredCards) {
 
 function renderDeckList() {
   const deckCommander = document.getElementById("deck-commander-panel");
-  deckCommander.innerHTML = deck
+  deckCommander.innerHTML = '<span>Commander</span>\n' + deck
     .filter((c) => c.source == "commander")
     .map(
       (card) => `
@@ -259,7 +279,7 @@ function renderDeckList() {
     .join("");
 
   const deckList = document.getElementById("deck-list-panel");
-  deckList.innerHTML = deck
+  deckList.innerHTML = '<span>Deck</span>\n' + deck
     .filter((c) => !c.hasOwnProperty("source") || c.source == "list")
     .map(
       (card) => `
@@ -272,7 +292,7 @@ function renderDeckList() {
     .join("");
 
   const deckSideboard = document.getElementById("deck-sideboard-panel");
-  deckSideboard.innerHTML = deck
+  deckSideboard.innerHTML = '<span>Sideboard</span>\n' + deck
     .filter((c) => c.source == "sideboard")
     .map(
       (card) => `
@@ -285,7 +305,7 @@ function renderDeckList() {
     .join("");
 
   const deckExtra = document.getElementById("deck-extra-panel");
-  deckExtra.innerHTML = deck
+  deckExtra.innerHTML = '<span>Extra</span>\n' + deck
     .filter((c) => c.source == "extra")
     .map(
       (card) => `
