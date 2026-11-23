@@ -96,6 +96,10 @@ class CardModel {
           }
         }
 
+        if (card.type.includes("Treasure")) {
+          card.metadata += `<b>Treasure</b>: This card type may only be added to your sideboard and can only be retrieved with special circumstances.<br><br>`;
+        }
+
         if (card.type.includes("Rune")) {
           card.metadata += `<b>Rune</b>: Add this to your cards if your deck is using this rune in its identity.<br><br>`;
         }
