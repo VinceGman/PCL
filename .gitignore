@@ -10,6 +10,9 @@ PCL/
 # environment variables
 *.env
 
+# lua scripts
+*.lua
+
 # credential files
 service-account.json
 
