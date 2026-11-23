@@ -177,7 +177,7 @@ document.querySelector(".autofill-pandoras-deck").addEventListener("click", () =
   deck.length = 0;
 
   for (const card of cards) {
-    if (card.type == "Sorcery Spell" && card.related == '') {
+    if (card.type.includes("Spell") && card.related == '' && !card.type.includes("Quest")) {
       addCard("list", card.id);
     }
   }

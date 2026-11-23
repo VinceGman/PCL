@@ -249,8 +249,8 @@ body {
   flex-direction: row !important;
   flex-wrap: wrap !important;
   align-items: flex-start !important;
-  width: 24vw !important;
-  min-width: 24vw;
+  width: 25vw !important;
+  min-width: 25vw;
   height: 13vh;
   min-height: 13vh;
   /* border: 0.0625rem solid #181a1b; */
