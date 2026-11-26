@@ -4,6 +4,12 @@
     --panel-border: #ccc;
 }
 
+.graymode {
+    --panel-bg: #313537;
+    --panel-text: #fff;
+    --panel-border: #ccc;
+}
+
 .lightmode {
     --panel-bg: #fff;
     --panel-text: #181a1b;

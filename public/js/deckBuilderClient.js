@@ -177,17 +177,23 @@ document.querySelector(".autofill-pandoras-deck").addEventListener("click", () =
   deck.length = 0;
 
   for (const card of cards) {
-    if (card.type.includes("Spell") && card.related == '' && !card.type.includes("Quest")) {
+    if (card.type.includes("Spell") && !card.type.includes("Quest") && card.related == '') {
       addCard("list", card.id);
     }
   }
 });
 
-//
+// DONE
+let theme = 0;
 document.querySelector(".theme-toggle").addEventListener("click", (event) => {
-  event.currentTarget.textContent = "Dark Mode";
-  const isLight = document.body.classList.toggle("lightmode");
-  event.currentTarget.textContent = isLight ? "Dark Mode" : "Light Mode";
+  document.body.classList.remove("lightmode", "graymode");
+
+  theme = (theme + 1) % 3;
+
+  if (theme === 1) document.body.classList.add("graymode");
+  if (theme === 2) document.body.classList.add("lightmode");
+
+  event.currentTarget.textContent = ["Gray Mode", "Light Mode", "Dark Mode"][theme];
 });
 
 // DONE
