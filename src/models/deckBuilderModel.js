@@ -88,6 +88,10 @@ class CardModel {
           card.metadata += `This may be used as your <b>Commander</b>.<br><br>`;
         }
 
+        if(card.type.includes("Aura") || card.type.includes("Quest") || card.type.includes("Titan")) {
+          card.metadata += `<b>Unique</b>: The effects of only one copy of this card are active at a time on a battlefield.<br><br>`;
+        }
+
         if (card.text.toLowerCase().includes("counter")) {
           if (!card.text.toLowerCase().includes("spell")) {
             card.metadata += `<b>Counters</b>: When a permanent gains a specific counter, it will usually use them to track how many times something has happened. When a creature gets "+x/+x" counters, it means it adds that many stats.<br><br>`;
@@ -113,7 +117,11 @@ class CardModel {
         }
 
         if (card.type.includes("Titan")) {
-          card.metadata += `<b>Titan</b>: This creature's tap abilities may only be used once (each) until it enters the battlefield again. You may only control one Titan creature at a time.<br><br>`;
+          card.metadata += `<b>Titan</b>: This creature's tap abilities may only be used once until it enters the battlefield again.<br><br>`;
+        }
+
+        if (card.type.includes("Quest")) {
+          card.metadata += `<b>Quest</b>: This card may begin the game as part of your command zone.<br><br>`;
         }
 
         if (card.type.includes("Weapon")) {
