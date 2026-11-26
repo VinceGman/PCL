@@ -45,33 +45,16 @@ function addCard(source, id, maxCount) {
     .reduce((sum, c) => sum + (c.deckCopies ?? 0), 0);
 
   let countToAdd = 1;
+  const totalCopiesAtSource = deckCard?.deckCopies ?? 0;
 
-  if (
-    source == "commander" &&
-    (card.rarity != "Legendary" || !card.type.includes("Creature"))
-  )
+  if (source === "commander" && (card.rarity !== "Legendary" || !card.type.includes("Creature"))) return;
+
+  if (totalDeckCopies >= card.copies) return;
+
+  if (maxCount && (source === "list" || card.type === "Rune")) {
+    countToAdd = card.copies - totalDeckCopies;
+  } else if (totalCopiesAtSource >= 1 && source !== "list" && card.type !== "Rune") {
     return;
-
-  if (deckCard) {
-    if (totalDeckCopies >= deckCard.copies) return; // or >= 1 when source != list
-    if (maxCount) {
-      if (source == "list" || card.type == "Rune") {
-        countToAdd = deckCard.copies - totalDeckCopies;
-      } else {
-        if (deckCard.deckCopies >= 1) return;
-      }
-    } else {
-      if (source != "list" && card.type != "Rune" && deckCard.deckCopies >= 1)
-        return;
-    }
-  } else if (maxCount) {
-    if (source == "list" || card.type == "Rune") {
-      countToAdd = card.copies - totalDeckCopies;
-    } else {
-      if (totalDeckCopies >= card.copies) return;
-    }
-  } else {
-    if (totalDeckCopies >= card.copies) return;
   }
 
   if (!deckCard) {
@@ -85,6 +68,15 @@ function addCard(source, id, maxCount) {
     if (a.cmc !== b.cmc) return a.cmc - b.cmc;
     if (a.name !== b.name) return a.name.localeCompare(b.name);
   });
+
+  if (id == 644 && source == "commander") {
+    for(const curr_card of cards) {
+      if (curr_card.rarity === "Legendary" && curr_card.type != "Quest" && curr_card.copies === 1) {
+        curr_card.copies = 2;
+        updateSelection(curr_card.id);
+      }
+    }
+  }
 
   updateSelection(id);
   updateCardCounts();
@@ -124,6 +116,15 @@ function removeCard(source, id, maxCount) {
     removed = true;
   } else {
     card.deckCopies -= 1;
+  }
+
+  if (id == 644 && source == "commander") {
+    for (const curr_card of cards) {
+      if (curr_card.rarity === "Legendary" && curr_card.copies === 2) {
+        curr_card.copies = 1;
+        updateSelection(curr_card.id);
+      }
+    }
   }
 
   updateSelection(id);
@@ -444,6 +445,14 @@ function setDeckListCardsClickable() {
       removeCard(source, id);
     });
 
+    div.addEventListener("mouseleave", () => {
+      const infoBox = document.getElementById("card-info");
+      infoBox.style.left = `1vw`;
+      infoBox.style.top = `1vw`;
+      infoBox.innerHTML = "";
+      infoBox.style.display = "none";
+    });
+
     div.addEventListener("mouseenter", (e) => {
       const infoBox = document.getElementById("card-info");
 
@@ -492,6 +501,14 @@ function setDeckListCardsClickable() {
       const id = container.dataset.id;
       const source = container.dataset.source;
       removeCard(source, id);
+    });
+
+    div.addEventListener("mouseleave", () => {
+      const infoBox = document.getElementById("card-info");
+      infoBox.style.left = `1vw`;
+      infoBox.style.top = `1vw`;
+      infoBox.innerHTML = "";
+      infoBox.style.display = "none";
     });
 
     div.addEventListener("mouseenter", (e) => {
@@ -544,6 +561,14 @@ function setDeckListCardsClickable() {
       removeCard(source, id);
     });
 
+    div.addEventListener("mouseleave", () => {
+      const infoBox = document.getElementById("card-info");
+      infoBox.style.left = `1vw`;
+      infoBox.style.top = `1vw`;
+      infoBox.innerHTML = "";
+      infoBox.style.display = "none";
+    });
+
     div.addEventListener("mouseenter", (e) => {
       const infoBox = document.getElementById("card-info");
 
@@ -592,6 +617,14 @@ function setDeckListCardsClickable() {
       const id = container.dataset.id;
       const source = container.dataset.source;
       removeCard(source, id);
+    });
+
+    div.addEventListener("mouseleave", () => {
+      const infoBox = document.getElementById("card-info");
+      infoBox.style.left = `1vw`;
+      infoBox.style.top = `1vw`;
+      infoBox.innerHTML = "";
+      infoBox.style.display = "none";
     });
 
     div.addEventListener("mouseenter", (e) => {
@@ -646,46 +679,6 @@ document.getElementById("card-list-panel").addEventListener("scroll", () => {
   infoBox.innerHTML = "";
   infoBox.style.display = "none";
 });
-
-document
-  .getElementById("deck-commander-panel")
-  .addEventListener("mouseleave", () => {
-    const infoBox = document.getElementById("card-info");
-    infoBox.style.left = `1vw`;
-    infoBox.style.top = `1vw`;
-    infoBox.innerHTML = "";
-    infoBox.style.display = "none";
-  });
-
-document
-  .getElementById("deck-list-panel")
-  .addEventListener("mouseleave", () => {
-    const infoBox = document.getElementById("card-info");
-    infoBox.style.left = `1vw`;
-    infoBox.style.top = `1vw`;
-    infoBox.innerHTML = "";
-    infoBox.style.display = "none";
-  });
-
-document
-  .getElementById("deck-sideboard-panel")
-  .addEventListener("mouseleave", () => {
-    const infoBox = document.getElementById("card-info");
-    infoBox.style.left = `1vw`;
-    infoBox.style.top = `1vw`;
-    infoBox.innerHTML = "";
-    infoBox.style.display = "none";
-  });
-
-document
-  .getElementById("deck-extra-panel")
-  .addEventListener("mouseleave", () => {
-    const infoBox = document.getElementById("card-info");
-    infoBox.style.left = `1vw`;
-    infoBox.style.top = `1vw`;
-    infoBox.innerHTML = "";
-    infoBox.style.display = "none";
-  });
 
 // DONE
 function setCardListCardsClickable() {
@@ -856,14 +849,16 @@ function loadDeckList() {
     const deckCopies = parseInt(cardString.slice(-1), 16);
 
     const card = cards.find((card) => card.id == id);
-    if (!card) {
-      continue;
-    }
+    if (!card) continue;
 
     card.source = source;
-
-    deck.push({ ...card, deckCopies: Math.min(+deckCopies, card.copies) });
-    updateSelection(id);
+    if (source == "commander") {
+      addCard(source, id);
+    }
+    else {
+      deck.push({ ...card, deckCopies: Math.min(+deckCopies, card.copies) });
+      updateSelection(id);
+    }
   }
 
   deck.sort((a, b) => {
@@ -1117,6 +1112,9 @@ function updateSelection(id) {
   const clc = document.querySelector(`[data-id="${String(id)}"]`);
   if (!clc) return;
 
+  const card = cards.find((c) => c.id == id);
+  if (!card) return;
+
   const deckVersions = deck.filter((c) => c.id == id);
   const totalDeckCopies = deckVersions.reduce(
     (sum, c) => sum + (c.deckCopies ?? 0),
@@ -1125,7 +1123,7 @@ function updateSelection(id) {
 
   clc.classList.toggle(
     "disabled",
-    deckVersions.length !== 0 && totalDeckCopies >= deckVersions[0].copies,
+    deckVersions.length !== 0 && totalDeckCopies >= card.copies,
   );
 }
 
