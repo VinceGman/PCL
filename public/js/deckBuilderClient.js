@@ -122,6 +122,14 @@ function removeCard(source, id, maxCount) {
     for (const curr_card of cards) {
       if (curr_card.rarity === "Legendary" && curr_card.copies === 2) {
         curr_card.copies = 1;
+
+        const deckCards = deck.filter(card => card.id === curr_card.id)
+        const totalDeckCopies = deck
+          .filter((c) => c.id == curr_card.id)
+          .reduce((sum, c) => sum + (c.deckCopies ?? 0), 0);
+
+        if (totalDeckCopies > 1) removeCard(deckCards[deckCards.length-1].source, curr_card.id);
+
         updateSelection(curr_card.id);
       }
     }
