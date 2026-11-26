@@ -71,7 +71,7 @@ function addCard(source, id, maxCount) {
 
   if (id == 644 && source == "commander") {
     for(const curr_card of cards) {
-      if (curr_card.rarity === "Legendary" && curr_card.type != "Quest" && curr_card.copies === 1) {
+      if (curr_card.rarity === "Legendary" && curr_card.type != "Quest" && !curr_card.type.includes("Token") && curr_card.copies === 1) {
         curr_card.copies = 2;
         updateSelection(curr_card.id);
       }
